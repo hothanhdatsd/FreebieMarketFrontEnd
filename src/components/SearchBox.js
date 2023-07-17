@@ -16,7 +16,7 @@ export default function SearchBox() {
   return (
     <Form
       onSubmit={submitHandler}
-      style={{ display: "flex", marginLeft: "400px" }}
+      style={{ display: "flex", marginLeft: "170px" }}
     >
       <Form.Control
         type="text"

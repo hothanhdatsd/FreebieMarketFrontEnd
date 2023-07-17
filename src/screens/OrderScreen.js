@@ -48,6 +48,10 @@ const OrderScreen = ({ match }) => {
       order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
     );
   }
+  let VND = new Intl.NumberFormat("en-US", {
+    currency: "VND",
+    style: "currency",
+  });
 
   useEffect(() => {
     if (!userInfo) {
@@ -160,8 +164,8 @@ const OrderScreen = ({ match }) => {
                           </Link>
                         </Col>
                         <Col md={4}>
-                          {item.qty} x {item.price} đ = {item.qty * item.price}{" "}
-                          đ
+                          {item.qty} x {VND.format(item.price)} đ ={" "}
+                          {VND.format(item.qty * item.price)} đ
                         </Col>
                       </Row>
                     </ListGroup.Item>
@@ -186,7 +190,7 @@ const OrderScreen = ({ match }) => {
               <ListGroup.Item>
                 <Row>
                   <Col>Phí vận chuyển</Col>
-                  <Col>{order.shippingPrice} $</Col>
+                  <Col>{order.shippingPrice.toFixed(1)} $</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>

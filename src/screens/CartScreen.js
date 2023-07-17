@@ -20,14 +20,17 @@ const CartScreen = (match, location, history) => {
   const productId = id;
   let exam = useLocation().search;
   const qty = exam ? Number(exam.split("=")[1]) : 1;
-
-  // console.log(qty, productId);
   const dispatch = useDispatch();
   useEffect(() => {
     if (productId) {
       dispatch(addToCart(productId, qty));
     }
   }, [dispatch, productId, qty]);
+
+  let VND = new Intl.NumberFormat("en-US", {
+    currency: "VND",
+    style: "currency",
+  });
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
@@ -69,7 +72,7 @@ const CartScreen = (match, location, history) => {
                         {item.name}
                       </Link>
                     </Col>
-                    <Col md={2}>{item.price} đ</Col>
+                    <Col md={2}>{VND.format(item.price)} đ</Col>
                     <Col md={2}>
                       <Form.Control
                         as="select"
@@ -133,11 +136,12 @@ const CartScreen = (match, location, history) => {
                     Tổng :{" "}
                   </Col>
                   <Col md={3} style={{ paddingLeft: "0" }}>
-                    {cartItems.reduce(
-                      (acc, item) => acc + item.qty * item.price,
-                      0
+                    {VND.format(
+                      cartItems.reduce(
+                        (acc, item) => acc + item.qty * item.price,
+                        0
+                      )
                     )}{" "}
-                    đ
                   </Col>
                 </Row>
               </ListGroup.Item>

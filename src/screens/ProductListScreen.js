@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Table, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
@@ -69,6 +69,10 @@ const ProductListScreen = () => {
       dispatch(deleteProduct(id));
     }
   };
+  let VND = new Intl.NumberFormat("en-US", {
+    currency: "VND",
+    style: "currency",
+  });
 
   const createProductHandler = (product) => {
     dispatch(createProduct());
@@ -85,9 +89,9 @@ const ProductListScreen = () => {
         </Col>
         <Col className="text-right">
           <Button
+            style={{ marginRight: "-265px", float: "right" }}
             className="my-3"
             onClick={createProductHandler}
-            style={{ float: "right" }}
           >
             <i className="fas fa-plus"></i> Thêm sản phẩm
           </Button>
@@ -126,7 +130,7 @@ const ProductListScreen = () => {
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
-                  <td>{product.price}đ</td>
+                  <td>{VND.format(product.price)}đ</td>
                   <td>{product.category}</td>
                   <td>
                     <LinkContainer to={`/admin/product/${product._id}/edit`}>

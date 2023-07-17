@@ -1,15 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Row,
-  Col,
-  Form,
-  Image,
-  ListGroup,
-  Card,
-  Button,
-} from "react-bootstrap";
+import { Row, Col, Form, Image, ListGroup, Button } from "react-bootstrap";
 import Rating from "../components/Rating";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -71,6 +63,10 @@ const ProductScreen = ({ match }) => {
       })
     );
   };
+  let VND = new Intl.NumberFormat("en-US", {
+    currency: "VND",
+    style: "currency",
+  });
 
   return (
     <>
@@ -84,7 +80,7 @@ const ProductScreen = ({ match }) => {
       ) : (
         <>
           <Meta title={product.name} />
-          <Row>
+          <Row collapseonselect="true">
             <Col md={6}>
               <Image
                 style={{
@@ -107,7 +103,7 @@ const ProductScreen = ({ match }) => {
                   <Row>
                     <Col md={3}>Giá:</Col>
                     <Col md={3}>
-                      <strong>{product.price} đ</strong>
+                      <strong>{VND.format(product.price)}</strong>
                     </Col>
                   </Row>
                 </ListGroup.Item>

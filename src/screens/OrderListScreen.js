@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Table, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
-import Loader from "../components/Loader";
 import { listOrders } from "../actions/orderActions";
 const OrderListScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -16,6 +15,11 @@ const OrderListScreen = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  let VND = new Intl.NumberFormat("en-US", {
+    currency: "VND",
+    style: "currency",
+  });
+
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
       dispatch(listOrders());
@@ -26,7 +30,7 @@ const OrderListScreen = ({ history }) => {
 
   return (
     <>
-      <h1>Orders</h1>
+      <h1>Đơn đặt</h1>
       {loading ? (
         <Message />
       ) : error ? (
@@ -50,7 +54,7 @@ const OrderListScreen = ({ history }) => {
                 <td>{order._id}</td>
                 <td>{order.user && order.user.name}</td>
                 <td>{order.createdAt.substring(0, 10)}</td>
-                <td>{order.totalPrice}đ</td>
+                <td>{VND.format(order.totalPrice)}đ</td>
                 <td>
                   {order.isPaid ? (
                     order.paidAt.substring(0, 10)

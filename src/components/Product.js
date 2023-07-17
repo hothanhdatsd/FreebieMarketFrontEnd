@@ -3,6 +3,11 @@ import { Card } from "react-bootstrap";
 import Rating from "../components/Rating";
 import { Link } from "react-router-dom";
 const Product = ({ product }) => {
+  let VND = new Intl.NumberFormat("en-US", {
+    currency: "VND",
+    style: "currency",
+  });
+
   return (
     <Card
       className="my-3 p-3 rounded"
@@ -37,7 +42,7 @@ const Product = ({ product }) => {
             style={{ position: "absolute", bottom: "60px" }}
             className="my-3"
           >
-            {product.price} đ
+            {VND.format(product.price)}
           </div>
         </Card.Text>
       </Card.Body>

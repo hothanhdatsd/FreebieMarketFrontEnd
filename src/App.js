@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, useNavigate, Switch } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import "./bootstrap.min.css";
 import "./index.css";
@@ -20,7 +20,7 @@ import UserScreenEdit from "./screens/UserScreenEdit";
 import ProductListScreen from "./screens/ProductListScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
 import OrderListScreen from "./screens/OrderListScreen";
-import SearchBox from "./components/SearchBox";
+import DashBoard from "./screens/DashBoard";
 
 const App = () => {
   return (
@@ -54,7 +54,11 @@ const App = () => {
               path="/admin/product/:id/edit"
               element={<ProductEditScreen />}
             />{" "}
-            <Route path="/admin/orderlist" element={<OrderListScreen />} />{" "}
+            <Route
+              path="/admin/orderlist"
+              element={<OrderListScreen />}
+              exact
+            />{" "}
             <Route path="/search/:keyword" element={<HomeScreen />} exact />
             <Route path="/page/:pageNumber" element={<HomeScreen />} exact />
             <Route
@@ -63,6 +67,7 @@ const App = () => {
               exact
             />
             <Route path="/" element={<HomeScreen />} exact />
+            <Route path="/admin/dashboard" element={<DashBoard />} />
           </Routes>{" "}
         </Container>{" "}
       </main>{" "}

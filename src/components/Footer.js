@@ -1,6 +1,6 @@
 import React from "react";
 // import { Container, Row, Col } from "react-bootstrap";
-import { CDBFooter, CDBFooterLink, CDBBox, CDBBtn, CDBIcon } from "cdbreact";
+import { CDBFooter, CDBBox, CDBBtn, CDBIcon } from "cdbreact";
 import "../index.css";
 const Footer = () => {
   return (

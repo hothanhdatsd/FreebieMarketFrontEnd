@@ -5,6 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import CheckoutSteps from "../components/CheckoutSteps";
 import Message from "../components/Message";
 import { createOrder } from "../actions/orderActions";
+import { updateProduct } from "../actions/productActions";
 
 const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -28,13 +29,15 @@ const PlaceOrderScreen = ({ history }) => {
 
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, success, error } = orderCreate;
-
+  let VND = new Intl.NumberFormat("en-US", {
+    currency: "VND",
+    style: "currency",
+  });
   useEffect(() => {
     if (success) {
-      // navigate(`/order/${order._id}`);
       navigate(`/order/${order._id}`);
     }
-  }, [history, success]);
+  }, [history, success, navigate]);
 
   const placeOrderHandler = () => {
     dispatch(
@@ -46,6 +49,9 @@ const PlaceOrderScreen = ({ history }) => {
         taxPrice: cart.taxPrice,
         shippingPrice: cart.shippingPrice,
         totalPrice: cart.totalPrice,
+      }),
+      updateProduct({
+        sold: cart.cartItems.qty,
       })
     );
   };
@@ -93,7 +99,8 @@ const PlaceOrderScreen = ({ history }) => {
                         </Col>{" "}
                         <Col md={4}>
                           {" "}
-                          {item.qty}x {item.price} đ = {item.qty * item.price} đ{" "}
+                          {item.qty}x {VND.format(item.price)} đ ={" "}
+                          {VND.format(item.qty * item.price)} đ{" "}
                         </Col>{" "}
                       </Row>{" "}
                     </ListGroup.Item>
