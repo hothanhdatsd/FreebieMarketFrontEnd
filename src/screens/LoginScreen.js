@@ -22,6 +22,38 @@ const LoginScreen = ({ location }) => {
     e.preventDefault();
     dispatch(login(email, password));
   };
+  const loginGoogle = async () => {
+    const googleURL = "http://localhost:5000/auth/google";
+    const width = 500; // Desired width of the popup window
+    const height = 600; // Desired height of the popup window
+
+    // Calculate the position to center the popup on the screen
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2 - height / 2;
+
+    // Open the popup window with centered position
+    window.open(
+      googleURL,
+      "_blank",
+      `width=${width},height=${height},left=${left},top=${top}`
+    );
+  };
+  const loginFacebook = async () => {
+    const googleURL = "http://localhost:5000/auth/facebook";
+    const width = 500; // Desired width of the popup window
+    const height = 600; // Desired height of the popup window
+
+    // Calculate the position to center the popup on the screen
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2 - height / 2;
+
+    // Open the popup window with centered position
+    window.open(
+      googleURL,
+      "_blank",
+      `width=${width},height=${height},left=${left},top=${top}`
+    );
+  };
   const redirect = exam ? exam.split("=")[1] : "/";
 
   useEffect(() => {
@@ -60,7 +92,10 @@ const LoginScreen = ({ location }) => {
           Đăng nhập
         </Button>
       </Form>
-
+      <Row className="py-3">
+        <Col onClick={loginGoogle}>GOOGLE </Col>
+        <Col onClick={loginFacebook}>FACEBOOK </Col>
+      </Row>{" "}
       <Row className="py-3">
         <Col>
           Chưa có tài khoản?{" "}
