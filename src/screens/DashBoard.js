@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Area } from "@ant-design/plots";
-
 const DashBoard = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -13,11 +12,11 @@ const DashBoard = () => {
       .then((json) => {
         setData(json);
       })
-
       .catch((error) => {
         console.log("fetch data failed", error);
       });
   };
+
   // const formatDay = (data) => {
   //   data.forEach((item) => {
   //     item.createdAt = item.createdAt.toLocaleDateString("en-US", {

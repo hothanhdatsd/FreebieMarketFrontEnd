@@ -9,6 +9,7 @@ import { register } from "../actions/userActions";
 
 const RegisterScreen = ({ location }) => {
   const [name, setName] = useState("");
+  const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -25,7 +26,7 @@ const RegisterScreen = ({ location }) => {
     if (password !== confirmPassword) {
       setMessage("Password do not match");
     } else {
-      dispatch(register(name, email, password));
+      dispatch(register(name, email, password, userName));
     }
     //dispatch
   };
@@ -45,15 +46,23 @@ const RegisterScreen = ({ location }) => {
       {loading && <Loader />}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="name">
-          <Form.Label>Tên</Form.Label>
+          <Form.Label>Tên người dùng</Form.Label>
           <Form.Control
             type="name"
-            placeholder="Nhập tên "
+            placeholder="Nhập tên người dùng"
             value={name}
             onChange={(e) => setName(e.target.value)}
           ></Form.Control>
         </Form.Group>
-
+        <Form.Group controlId="userName">
+          <Form.Label>Tên người dùng</Form.Label>
+          <Form.Control
+            type="userName"
+            placeholder="Nhập tên tài khoản"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          ></Form.Control>
+        </Form.Group>
         <Form.Group controlId="email">
           <Form.Label>Email </Form.Label>
           <Form.Control

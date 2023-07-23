@@ -24,27 +24,37 @@ const ProfileScreen = () => {
   const { userInfo } = userLogin;
 
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
-  const { success } = userUpdateProfile;
+  const { success, errorUpdateUser } = userUpdateProfile;
 
   const orderListMy = useSelector((state) => state.orderListMy);
   const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
 
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   if (!userInfo) {
+  //     navigate("/login");
+  //   } else {
+  //     if (!user.name || !user || success || !user.email) {
+  //       dispatch(getUserDetails("profile"));
+  //       dispatch(listMyOrders());
+  //     } else {
+  //       setName(user?.name);
+  //       setEmail(user?.email);
+  //     }
+  //   }
+  // }, [dispatch, userInfo, success, user.name, user.email, navigate]);
+
   useEffect(() => {
     if (!userInfo) {
       navigate("/login");
     } else {
-      if (!user || !user.name || success) {
-        dispatch(getUserDetails("profile"));
-        dispatch(listMyOrders());
-      } else {
-        setName(user.name);
-        setEmail(user.email);
-      }
+      dispatch(getUserDetails("profile"));
+      dispatch(listMyOrders());
+      setName(user?.name);
+      setEmail(user?.email);
     }
-  }, [dispatch, userInfo, user, success, navigate]);
-
+  }, [dispatch, userInfo, success, user.name, user.email, navigate]);
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
@@ -52,7 +62,6 @@ const ProfileScreen = () => {
     } else {
       dispatch(updateUserProfile({ id: user._id, name, email, password }));
     }
-    //dispatch
   };
 
   return (
@@ -64,6 +73,9 @@ const ProfileScreen = () => {
         {success && (
           <Message variant="success">Thông tin đã được cập nhật</Message>
         )}
+        {errorUpdateUser && (
+          <Message variant="danger">Email đã được sử dụng</Message>
+        )}
         {loading ? (
           <Loader />
         ) : error ? (
@@ -71,7 +83,7 @@ const ProfileScreen = () => {
         ) : (
           <Form onSubmit={submitHandler}>
             <Form.Group controlId="name">
-              <Form.Label>Tên</Form.Label>
+              <Form.Label style={{ fontWeight: "bold" }}>Tên</Form.Label>
               <Form.Control
                 type="name"
                 placeholder="Enter name"
@@ -79,9 +91,10 @@ const ProfileScreen = () => {
                 onChange={(e) => setName(e.target.value)}
               ></Form.Control>
             </Form.Group>
-
             <Form.Group controlId="email">
-              <Form.Label>Địa chỉ email</Form.Label>
+              <Form.Label style={{ fontWeight: "bold" }}>
+                Địa chỉ email
+              </Form.Label>
               <Form.Control
                 type="email"
                 placeholder="Enter email"
@@ -89,28 +102,31 @@ const ProfileScreen = () => {
                 onChange={(e) => setEmail(e.target.value)}
               ></Form.Control>
             </Form.Group>
-
-            <Form.Group controlId="password">
-              <Form.Label>Mật khẩu</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Enter password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-
-            <Form.Group controlId="confirmPassword">
-              <Form.Label>Mật khẩu xác nhận</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Confirm password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-
-            <Button type="submit" variant="primary">
+            {userInfo.provide === "local" && (
+              <Form.Group controlId="password">
+                <Form.Label style={{ fontWeight: "bold" }}>Mật khẩu</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Enter password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+            )}
+            {userInfo.provide === "local" && (
+              <Form.Group controlId="confirmPassword">
+                <Form.Label style={{ fontWeight: "bold" }}>
+                  Mật khẩu xác nhận
+                </Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Confirm password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+            )}
+            <Button style={{ marginTop: 10 }} type="submit" variant="primary">
               Cập nhật
             </Button>
           </Form>

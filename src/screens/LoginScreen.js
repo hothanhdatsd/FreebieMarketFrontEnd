@@ -5,10 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import FormContainer from "../components/FormContainer";
+import {
+  FacebookLoginButton,
+  GoogleLoginButton,
+} from "react-social-login-buttons";
 import { login } from "../actions/userActions";
-
 const LoginScreen = ({ location }) => {
-  const [email, setEmail] = useState(" ");
+  const [userName, setUserName] = useState(" ");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
@@ -20,7 +23,7 @@ const LoginScreen = ({ location }) => {
   let navigate = useNavigate();
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(login(email, password));
+    dispatch(login(userName, password));
   };
   const loginGoogle = async () => {
     const googleURL = "http://localhost:5000/auth/google";
@@ -68,13 +71,13 @@ const LoginScreen = ({ location }) => {
       {error && <Message variant="danger">{error}</Message>}
       {loading && <Loader />}
       <Form onSubmit={submitHandler}>
-        <Form.Group controlId="email">
-          <Form.Label>Địa chỉ email</Form.Label>
+        <Form.Group controlId="userName">
+          <Form.Label>Tên tài khoản</Form.Label>
           <Form.Control
-            type="email"
-            placeholder="Nhập email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            placeholder="Nhập userName"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
@@ -88,13 +91,17 @@ const LoginScreen = ({ location }) => {
           ></Form.Control>
         </Form.Group>
 
-        <Button type="submit" variant="primary">
+        <Button style={{ marginTop: 10 }} type="submit" variant="primary">
           Đăng nhập
         </Button>
       </Form>
       <Row className="py-3">
-        <Col onClick={loginGoogle}>GOOGLE </Col>
-        <Col onClick={loginFacebook}>FACEBOOK </Col>
+        <Col>
+          <FacebookLoginButton onClick={loginFacebook} />
+        </Col>
+        <Col>
+          <GoogleLoginButton buttonText="Login" onClick={loginGoogle} />
+        </Col>
       </Row>{" "}
       <Row className="py-3">
         <Col>

@@ -21,6 +21,7 @@ const CartScreen = (match, location, history) => {
   let exam = useLocation().search;
   const qty = exam ? Number(exam.split("=")[1]) : 1;
   const dispatch = useDispatch();
+  const rf = localStorage.getItem("cartItems");
   useEffect(() => {
     if (productId) {
       dispatch(addToCart(productId, qty));
@@ -53,6 +54,11 @@ const CartScreen = (match, location, history) => {
             </Message>
           ) : (
             <ListGroup variant="flush">
+              <Col md={4}>
+                <Link style={{ textDecoration: "none" }} to="/">
+                  Tiếp tục mua sắm
+                </Link>
+              </Col>
               {cartItems.map((item) => (
                 <ListGroup.Item key={item.product}>
                   <Row>
@@ -105,11 +111,6 @@ const CartScreen = (match, location, history) => {
                       </Button>
                     </Col>
                   </Row>
-                  <Col md={4}>
-                    <Link style={{ textDecoration: "none" }} to="/">
-                      Tiếp tục mua sắm
-                    </Link>
-                  </Col>
                 </ListGroup.Item>
               ))}
             </ListGroup>

@@ -14,7 +14,7 @@ const SuccessFBScreen = () => {
 
     const timer = setTimeout(() => {
       window.close();
-    }, 3000);
+    }, 2000);
     return () => {
       clearTimeout(timer);
 

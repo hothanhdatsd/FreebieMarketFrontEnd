@@ -5,12 +5,15 @@ import { LinkContainer } from "react-router-bootstrap";
 import { logout } from "../actions/userActions";
 import SearchBox from "../components/SearchBox";
 import "../bootstrap.min.css";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const logoutHandler = () => {
     dispatch(logout());
+    navigate("/");
+    localStorage.clear();
   };
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
