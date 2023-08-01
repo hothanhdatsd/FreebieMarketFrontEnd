@@ -1,6 +1,5 @@
 {
   "name": "frontend",
-  "proxy": "https://freebiemarket.onrender.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -16,6 +15,7 @@
     "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
+    "react-ionicons": "^4.2.1",
     "react-paypal-button-v2": "^2.6.3",
     "react-redux": "^8.0.4",
     "react-router": "^6.4.2",
@@ -23,9 +23,11 @@
     "react-router-dom": "^6.4.1",
     "react-scripts": "^4.0.3",
     "react-social-login-buttons": "^3.9.1",
+    "recharts": "^2.7.2",
     "redux": "^4.2.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
+    "sass": "^1.64.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

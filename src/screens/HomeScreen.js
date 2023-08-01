@@ -8,7 +8,6 @@ import Paginate from "../components/Paginate";
 import ProductCarousel from "../components/ProductCarousel";
 import { useParams } from "react-router-dom";
 import { listProducts } from "../actions/productActions";
-
 const HomeScreen = ({ match }) => {
   const { keyword } = useParams();
   const { pageNumber } = useParams();
@@ -33,8 +32,8 @@ const HomeScreen = ({ match }) => {
         <Message variant="danger">{error}</Message>
       ) : (
         <>
-          <Row>
-            {products.map((product) => (
+          <Row style={{ width: "100%", margin: "0", marginTop: "100px" }}>
+            {products?.map((product) => (
               <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
                 <Product product={product} />
               </Col>

@@ -16,7 +16,10 @@ export default function SearchBox() {
   return (
     <Form
       onSubmit={submitHandler}
-      style={{ display: "flex", marginLeft: "170px" }}
+      style={{
+        display: "flex",
+        marginLeft: "170px",
+      }}
     >
       <Form.Control
         type="text"
@@ -27,9 +30,13 @@ export default function SearchBox() {
       ></Form.Control>
       <Button
         type="submit"
-        variant="outline-success"
-        className="p-2"
-        style={{ color: "#fff", borderColor: "#fff", width: "108px" }}
+        className="p-2 "
+        style={{
+          color: "#fff",
+          borderColor: "#fff",
+          width: "108px",
+          backgroundColor: "#212529",
+        }}
       >
         Tìm kiếm
       </Button>

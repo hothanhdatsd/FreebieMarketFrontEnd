@@ -70,7 +70,7 @@ const ProductScreen = ({ match }) => {
 
   return (
     <>
-      <Link className="btn btn-light my-3" to="/">
+      <Link className="btn btn-light my-3" to="/" style={{ margin: "0 20px" }}>
         Trở về
       </Link>
       {loadingProductReview ? (
@@ -78,7 +78,7 @@ const ProductScreen = ({ match }) => {
       ) : errorProductReview ? (
         <Message variant="danger">{errorProductReview}</Message>
       ) : (
-        <>
+        <Row style={{ width: "100%", padding: "0  20px" }}>
           <Meta title={product.name} />
           <Row collapseonselect="true">
             <Col md={6}>
@@ -118,13 +118,6 @@ const ProductScreen = ({ match }) => {
                 </ListGroup.Item>
 
                 <ListGroup.Item>
-                  <Row>
-                    <Col md={3}>Loại:</Col>
-                    <Col md={3}>{product.category}</Col>
-                  </Row>
-                </ListGroup.Item>
-
-                <ListGroup.Item>
                   <Rating
                     value={product.rating}
                     text={`${product.numReviews} đánh giá`}
@@ -142,7 +135,7 @@ const ProductScreen = ({ match }) => {
                           value={qty}
                           onChange={(e) => setQty(e.target.value)}
                         >
-                          {[...Array(product.countInStock).keys()].map((x) => (
+                          {[...Array(product.countInStock).keys()]?.map((x) => (
                             <option key={x + 1} value={x + 1}>
                               {x + 1}
                             </option>
@@ -171,7 +164,7 @@ const ProductScreen = ({ match }) => {
                   <Message>Chưa có đánh giá</Message>
                 )}
                 <ListGroup variant="flush">
-                  {product.reviews.map((review) => (
+                  {product.reviews?.map((review) => (
                     <ListGroup.Item key={review._id}>
                       <strong>{review.name}</strong>
                       <Rating value={review.rating} />
@@ -232,7 +225,7 @@ const ProductScreen = ({ match }) => {
               </Col>
             </Row>
           </Row>
-        </>
+        </Row>
       )}
     </>
   );

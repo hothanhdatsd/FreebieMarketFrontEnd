@@ -33,8 +33,9 @@ export const listProducts =
       dispatch({
         type: PRODUCT_LIST_REQUEST,
       });
+
       const { data } = await axios.get(
-        `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+        `${process.env.REACT_APP_URL_API}/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
       );
 
       dispatch({
@@ -57,7 +58,9 @@ export const listProductDetails = (id) => async (dispatch) => {
     dispatch({
       type: PRODUCT_DETAIL_REQUEST,
     });
-    const { data } = await axios.get(`/api/products/${id}`);
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_URL_API}/api/products/${id}`
+    );
 
     dispatch({
       type: PRODUCT_DETAIL_SUCCESS,
@@ -89,7 +92,10 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
       },
     };
 
-    await axios.delete(`/api/products/${id}`, config);
+    await axios.delete(
+      `${process.env.REACT_APP_URL_API}/api/products/${id}`,
+      config
+    );
 
     dispatch({
       type: PRODUCT_DELETE_SUCCESS,
@@ -105,7 +111,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
   }
 };
 
-export const createProduct = () => async (dispatch, getState) => {
+export const createProduct = (product) => async (dispatch, getState) => {
   try {
     dispatch({
       type: PRODUCT_CREATE_REQUEST,
@@ -120,7 +126,11 @@ export const createProduct = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.post(`/api/products/`, {}, config);
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_URL_API}/api/products/`,
+      product,
+      config
+    );
 
     dispatch({
       type: PRODUCT_CREATE_SUCCESS,
@@ -151,7 +161,11 @@ export const importProduct = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.post(`/api/products/import`, {}, config);
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_URL_API}/api/products/import`,
+      {},
+      config
+    );
 
     dispatch({
       type: PRODUCT_IMPORT_SUCCESS,
@@ -185,7 +199,7 @@ export const updateProduct = (product) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `/api/products/${product._id}`,
+      `${process.env.REACT_APP_URL_API}/api/products/${product._id}`,
       product,
       config
     );
@@ -223,7 +237,11 @@ export const createProductReview =
         },
       };
 
-      await axios.post(`/api/products/${productId}/reviews`, review, config);
+      await axios.post(
+        `${process.env.REACT_APP_URL_API}/api/products/${productId}/reviews`,
+        review,
+        config
+      );
 
       dispatch({
         type: PRODUCT_CREATE_REVIEW_SUCCESS,
@@ -249,7 +267,9 @@ export const listTopProducts = () => async (dispatch) => {
       type: PRODUCT_TOP_REQUEST,
     });
 
-    const { data } = await axios.get(`/api/products/top`);
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_URL_API}/api/products/top`
+    );
 
     dispatch({
       type: PRODUCT_TOP_SUCCESS,

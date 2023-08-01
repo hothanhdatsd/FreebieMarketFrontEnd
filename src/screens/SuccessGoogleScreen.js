@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginGoogle } from "../actions/userActions";
-
+import axios from "axios";
 const SuccessGoogleScreen = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -21,6 +21,23 @@ const SuccessGoogleScreen = () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [dispatch]);
+  // const [user, setUser] = useState(null);
+
+  // const getUser = async () => {
+  //   try {
+  //     const url = `${process.env.REACT_APP_URL_API}/auth/successGG`;
+  //     const { data } = await axios.get(url, { withCredentials: true });
+  //     console.log(data);
+  //     setUser(data.user._json);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getUser();
+  // }, []);
+
   return (
     <div style={{ textAlign: "center", paddingTop: "50px" }}>
       <h2>Login Successful!</h2>

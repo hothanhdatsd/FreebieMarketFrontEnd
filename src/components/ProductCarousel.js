@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Carousel, Image } from "react-bootstrap";
+import { Carousel, Image, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "./Loader";
 import Message from "./Message";
@@ -21,21 +21,24 @@ const ProductCarousel = () => {
   ) : error ? (
     <Message variant="danger">{error}</Message>
   ) : (
-    <Carousel variant="dark" style={{ objectFit: "cover" }}>
-      {products.map((product) => (
+    <Carousel
+      variant="dark"
+      style={{ objectFit: "contain", padding: "0 20px" }}
+    >
+      {products?.map((product) => (
         <Carousel.Item key={product._id}>
-          <Link to={`/product/${product._id}`}>
+          <Link to={`/product/${product._id}`} className="carousel-flex">
             <Image
               src={product.image}
               alt={product.name}
               fluid
-              className="d-block w-100"
+              className="d-block  w50"
             />
-            <Carousel.Caption className="carousel-caption">
-              <h2 style={{ color: "#000" }}>
+            <Container className="w50">
+              <h2 style={{ color: "#000", textDecoration: "none" }}>
                 {product.name} ({product.price}đ)
               </h2>
-            </Carousel.Caption>
+            </Container>
           </Link>
         </Carousel.Item>
       ))}

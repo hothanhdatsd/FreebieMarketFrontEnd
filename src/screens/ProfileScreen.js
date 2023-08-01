@@ -65,7 +65,7 @@ const ProfileScreen = () => {
   };
 
   return (
-    <Row>
+    <Row style={{ width: "100%", padding: "0 20px" }}>
       <Col md={3}>
         <h2>Thông tin cá nhân</h2>
         {message && <Message variant="danger">{message}</Message>}
@@ -151,7 +151,7 @@ const ProfileScreen = () => {
               </tr>
             </thead>
             <tbody>
-              {orders.map((order) => (
+              {orders?.map((order) => (
                 <tr key={order._id}>
                   <td>{order._id}</td>
                   <td>{order.createdAt.substring(0, 10)}</td>

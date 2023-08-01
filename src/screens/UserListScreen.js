@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import { listUsers, deleteUser } from "../actions/userActions";
@@ -31,7 +31,7 @@ const UserListScreen = ({ history }) => {
   };
 
   return (
-    <>
+    <Row style={{ padding: "0 20px" }}>
       <h1>Người dùng</h1>
       {loading ? (
         <Message />
@@ -49,7 +49,7 @@ const UserListScreen = ({ history }) => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {users?.map((user) => (
               <tr key={user._id}>
                 <td>{user._id}</td>
                 <td>{user.name}</td>
@@ -82,7 +82,7 @@ const UserListScreen = ({ history }) => {
           </tbody>
         </Table>
       )}
-    </>
+    </Row>
   );
 };
 

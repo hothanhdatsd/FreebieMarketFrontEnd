@@ -18,7 +18,6 @@ const ProductEditScreen = ({ match, location }) => {
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState("");
   const [brand, setBrand] = useState("");
-  const [category, setCategory] = useState("");
   const [countInStock, setCountInStock] = useState("");
   const [description, setDescription] = useState("");
   const [uploading, setUploading] = useState(false);
@@ -46,7 +45,6 @@ const ProductEditScreen = ({ match, location }) => {
         setName(product.name);
         setPrice(product.price);
         setImage(product.image);
-        setCategory(product.category);
         setCountInStock(product.countInStock);
         setDescription(product.description);
       }
@@ -61,7 +59,6 @@ const ProductEditScreen = ({ match, location }) => {
         name,
         price,
         image,
-        category,
         description,
         countInStock,
       })
@@ -81,7 +78,11 @@ const ProductEditScreen = ({ match, location }) => {
         },
       };
 
-      const { data } = await axios.post("/api/upload", formData, config);
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_URL_API}/api/upload`,
+        formData,
+        config
+      );
 
       setImage(data);
       setUploading(false);
@@ -157,16 +158,6 @@ const ProductEditScreen = ({ match, location }) => {
                 placeholder="Enter countinstock "
                 value={countInStock}
                 onChange={(e) => setCountInStock(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-
-            <Form.Group controlId="category">
-              <Form.Label>Category</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter category "
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
               ></Form.Control>
             </Form.Group>
 

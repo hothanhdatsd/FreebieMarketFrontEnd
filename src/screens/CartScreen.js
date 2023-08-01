@@ -44,7 +44,7 @@ const CartScreen = (match, location, history) => {
   };
   return (
     <div>
-      <Row>
+      <Row style={{ width: "100%", padding: "0 20px" }}>
         <h1>Giỏ hàng</h1>
         <Col md={8}>
           {cartItems.length === 0 ? (
@@ -59,7 +59,7 @@ const CartScreen = (match, location, history) => {
                   Tiếp tục mua sắm
                 </Link>
               </Col>
-              {cartItems.map((item) => (
+              {cartItems?.map((item) => (
                 <ListGroup.Item key={item.product}>
                   <Row>
                     <Col md={2}>
@@ -90,7 +90,7 @@ const CartScreen = (match, location, history) => {
                         }
                         md={2}
                       >
-                        {[...Array(item.countInStock).keys()].map((x) => (
+                        {[...Array(item.countInStock).keys()]?.map((x) => (
                           <option
                             style={{ backgroundColor: "#7C88C3" }}
                             key={x + 1}

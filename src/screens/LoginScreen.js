@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, NavLink } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
@@ -10,8 +10,11 @@ import {
   GoogleLoginButton,
 } from "react-social-login-buttons";
 import { login } from "../actions/userActions";
+import logo from "../images/logo.png";
+import bgimage from "../images/bgimage.jpg";
+import AlertScreen from "./AlertScreen";
 const LoginScreen = ({ location }) => {
-  const [userName, setUserName] = useState(" ");
+  const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
@@ -23,7 +26,7 @@ const LoginScreen = ({ location }) => {
   let navigate = useNavigate();
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(login(userName, password));
+    dispatch(login(email, password));
   };
   const loginGoogle = async () => {
     const googleURL = "http://localhost:5000/auth/google";
@@ -66,55 +69,117 @@ const LoginScreen = ({ location }) => {
   }, [dispatch, userInfo, redirect, navigate]);
 
   return (
-    <FormContainer>
-      <h1>Đăng nhập</h1>
-      {error && <Message variant="danger">{error}</Message>}
-      {loading && <Loader />}
-      <Form onSubmit={submitHandler}>
-        <Form.Group controlId="userName">
-          <Form.Label>Tên tài khoản</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Nhập userName"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
+    // <FormContainer>
+    //   <h1 className="hehe">Đăng nhập</h1>
+    //   {error && <Message variant="danger">{error}</Message>}
+    //   {loading && <Loader />}
+    //   <Form onSubmit={submitHandler}>
+    //     <Form.Group controlId="userName">
+    //       <Form.Label>Tên tài khoản</Form.Label>
+    //       <Form.Control
+    //         type="text"
+    //         placeholder="Nhập userName"
+    //         value={userName}
+    //         onChange={(e) => setUserName(e.target.value)}
+    //       ></Form.Control>
+    //     </Form.Group>
 
-        <Form.Group controlId="password">
-          <Form.Label>Mật khẩu</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Nhập password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
+    //     <Form.Group controlId="password">
+    //       <Form.Label>Mật khẩu</Form.Label>
+    //       <Form.Control
+    //         type="password"
+    //         placeholder="Nhập password"
+    //         value={password}
+    //         onChange={(e) => setPassword(e.target.value)}
+    //       ></Form.Control>
+    //     </Form.Group>
 
-        <Button style={{ marginTop: 10 }} type="submit" variant="primary">
-          Đăng nhập
-        </Button>
-      </Form>
-      <Row className="py-3">
-        <Col>
-          <FacebookLoginButton onClick={loginFacebook} />
-        </Col>
-        <Col>
-          <GoogleLoginButton buttonText="Login" onClick={loginGoogle} />
-        </Col>
-      </Row>{" "}
-      <Row className="py-3">
-        <Col>
-          Chưa có tài khoản?{" "}
-          <Link
-            style={{ color: "#000" }}
-            to={redirect ? `/register?redirect=${redirect}` : "/register"}
-          >
-            Đăng ký
-          </Link>
-        </Col>
-      </Row>
-    </FormContainer>
+    //     <Button style={{ marginTop: 10 }} type="submit" variant="primary">
+    //       Đăng nhập
+    //     </Button>
+    //   </Form>
+    //   <Row className="py-3">
+    //     <Col>
+    //       <FacebookLoginButton onClick={loginFacebook} />
+    //     </Col>
+    //     <Col>
+    //       <GoogleLoginButton buttonText="Login" onClick={loginGoogle} />
+    //     </Col>
+    //   </Row>{" "}
+    //   <Row className="py-3">
+    //     <Col>
+    //       Chưa có tài khoản?{" "}
+    //       <Link
+    //         style={{ color: "#000" }}
+    //         to={redirect ? `/register?redirect=${redirect}` : "/register"}
+    //       >
+    //         Đăng ký
+    //       </Link>
+    //     </Col>
+    //   </Row>
+    // </FormContainer>
+    <div className="container">
+      <img className="food-img" src={bgimage} alt="" />
+      <div className="container-item">
+        {" "}
+        <div className="contain">
+          <img src={logo} alt="" className="food-logo" />
+          <div className="header">
+            <h5 className="header-title w800">Create an Account</h5>
+            <p className="header-title">Sign Up</p>
+          </div>
+        </div>
+        <div className="contain-mid">
+          <form onSubmit={submitHandler}>
+            <div className="contain-mid-item" id="userName">
+              <h5 className="contain-title">Email Address</h5>
+              <input
+                className="input-email"
+                type="text"
+                placeholder="Enter username"
+                value={email}
+                onChange={(e) => {
+                  setemail(e.target.value);
+                }}
+              />
+            </div>
+            <div className="contain-mid-item" id="password">
+              <h5 className="contain-title">Password</h5>
+              <input
+                className="input-email"
+                type="password"
+                placeholder="Enter password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
+            </div>
+            <div className="contain-checkbox">
+              <input type="checkbox" />
+              <p className="text fz18">Remember my prefence</p>
+            </div>
+            <button className="button" type="submit">
+              Sign Me In
+            </button>
+          </form>
+        </div>
+        {error && <AlertScreen error={error} />}
+        <div className="container-bottom">
+          <p className="text">Continue With</p>
+          <div className="mb-3 contain-bottom">
+            <FacebookLoginButton onClick={loginFacebook} />
+            <GoogleLoginButton buttonText="Login" onClick={loginGoogle} />
+          </div>
+        </div>
+        <div className="register text">
+          <span>Don't have an account? </span>
+          <NavLink className={"signup"} to={"/register"}>
+            Sign up
+          </NavLink>
+        </div>
+      </div>
+    </div>
   );
 };
 

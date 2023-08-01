@@ -1,11 +1,20 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
+import {
+  Container,
+  Navbar,
+  Nav,
+  NavDropdown,
+  Image,
+  ListGroupItem,
+} from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { logout } from "../actions/userActions";
 import SearchBox from "../components/SearchBox";
 import "../bootstrap.min.css";
-import { useNavigate } from "react-router-dom";
+import logo from "../images/logo.png";
+import { SearchOutline } from "react-ionicons";
+import { useNavigate, Link } from "react-router-dom";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -21,16 +30,22 @@ const Header = () => {
   return (
     <header>
       <Nav
-        class="navbar navbar-expand-lg navbar-dark bg-dark"
+        class="navbar navbar-expand-lg navbar-dark bg-dark  "
         style={{ color: "#fff", height: "86px" }}
+        expand="lg"
         bg="dark"
         variant="dark"
-        expand="lg"
         collapseOnSelect
       >
-        <Container class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <Container
+          className=" navbar-expand-lg navbar-dark  header-container"
+          style={{ cursor: "pointer" }}
+        >
           <LinkContainer to="/">
-            <Navbar.Brand>FreebieMarket</Navbar.Brand>
+            <ListGroupItem className="flex">
+              <Image className="food-logo" src={logo} rounded />
+              {/* <Navbar.Brand>FreebieMarket</Navbar.Brand> */}
+            </ListGroupItem>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -41,7 +56,25 @@ const Header = () => {
                   <i className="fas fa-shopping-cart custom"></i> Giỏ hàng
                 </Nav.Link>
               </LinkContainer>
-
+              {userInfo && userInfo.isAdmin && (
+                <NavDropdown title="Quản trị" id="adminmenu">
+                  <LinkContainer to="/admin/userlist">
+                    <NavDropdown.Item>Người dùng</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/admin/productlist">
+                    <NavDropdown.Item>Sản phẩm</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/admin/typeproductlist">
+                    <NavDropdown.Item>Loại sản phẩm</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/admin/orderlist">
+                    <NavDropdown.Item>Đặt hàng</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/admin/dashboard">
+                    <NavDropdown.Item>Doanh thu</NavDropdown.Item>
+                  </LinkContainer>
+                </NavDropdown>
+              )}
               {userInfo ? (
                 <NavDropdown
                   className="custom"
@@ -61,22 +94,6 @@ const Header = () => {
                     <i className="fas fa-user"></i> Đăng nhập
                   </Nav.Link>
                 </LinkContainer>
-              )}
-              {userInfo && userInfo.isAdmin && (
-                <NavDropdown title="Quản trị" id="adminmenu">
-                  <LinkContainer to="/admin/userlist">
-                    <NavDropdown.Item>Người dùng</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/admin/productlist">
-                    <NavDropdown.Item>Sản phẩm</NavDropdown.Item>
-                  </LinkContainer>{" "}
-                  <LinkContainer to="/admin/orderlist">
-                    <NavDropdown.Item>Đặt hàng</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/admin/dashboard">
-                    <NavDropdown.Item>Doanh thu</NavDropdown.Item>
-                  </LinkContainer>
-                </NavDropdown>
               )}
             </Nav>
           </Navbar.Collapse>

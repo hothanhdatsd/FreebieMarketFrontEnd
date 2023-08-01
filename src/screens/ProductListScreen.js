@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
-import { useParams, useNavigate } from "react-router-dom";
-import { Table, Button, Row, Col } from "react-bootstrap";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { Table, Button, Row, Col, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -83,27 +83,43 @@ const ProductListScreen = () => {
 
   return (
     <>
-      <Row className="align-items-center">
+      <Row
+        className="align-items-center"
+        style={{
+          width: "100%",
+          padding: "0 20px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <Col>
           <h1>Sản phẩm</h1>
         </Col>
-        <Col className="text-right">
-          <Button
-            style={{ marginRight: "-265px", float: "right" }}
-            className="my-3"
-            onClick={createProductHandler}
-          >
-            <i className="fas fa-plus"></i> Thêm sản phẩm
-          </Button>
-        </Col>
-        <Col className="text-right">
-          <Button
-            className="my-3"
-            onClick={importProductHandler}
-            style={{ float: "right" }}
-          >
-            <i className="fas fa-plus"></i> Nhập dữ liệu
-          </Button>
+        <Col
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
+        >
+          {/* <Col className="text-right">
+            <Button className="my-3" onClick={createProductHandler}>
+              <i className="fas fa-plus"></i> Thêm sản phẩm
+            </Button>
+          </Col> */}
+          <Col>
+            <Link to="/admin/createproduct"> Thêm sản phẩm</Link>
+          </Col>
+          <Col className="text-right">
+            <Button
+              className="my-3"
+              onClick={importProductHandler}
+              style={{ float: "right" }}
+            >
+              <i className="fas fa-plus"></i> Nhập dữ liệu
+            </Button>
+          </Col>
         </Col>
       </Row>
       {loadingDelete && <Loader />}
@@ -115,7 +131,7 @@ const ProductListScreen = () => {
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <>
+        <Row style={{ width: "100%", padding: "0 20px" }}>
           <Table striped bordered hover responsive className="table-sm">
             <thead>
               <tr>
@@ -126,12 +142,11 @@ const ProductListScreen = () => {
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
+              {products?.map((product) => (
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
                   <td>{VND.format(product.price)}đ</td>
-                  <td>{product.category}</td>
                   <td>
                     <LinkContainer to={`/admin/product/${product._id}/edit`}>
                       <Button variant="light" className="btn-sm">
@@ -151,7 +166,7 @@ const ProductListScreen = () => {
             </tbody>
           </Table>
           <Paginate page={page} pages={pages} isAdmin={true} />
-        </>
+        </Row>
       )}
     </>
   );

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Area } from "@ant-design/plots";
 const DashBoard = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -33,22 +32,16 @@ const DashBoard = () => {
       Authorization: `Bearer ${userInfo.token}`,
     },
   };
-  const config = {
-    data,
-    xField: "createdAt",
-    yField: "totalPrice",
-    xAxis: {
-      range: [0, 1],
-      tickCount: 5,
-    },
-    areaStyle: () => {
-      return {
-        fill: "l(270) 0:#ffffff 0.5:#7ec2f3 1:#1890ff",
-      };
-    },
-  };
 
-  return <Area {...config} />;
+
+  return <div className="home">
+    {/* <div className="box box8">
+        <BarChartBox {...barChartBoxVisit} />
+      </div>
+      <div className="box box9">
+        <BarChartBox {...barChartBoxRevenue} />
+      </div> */}
+  </div>;
 };
 
 export default DashBoard;

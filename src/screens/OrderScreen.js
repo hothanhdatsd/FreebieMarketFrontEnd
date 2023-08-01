@@ -59,7 +59,9 @@ const OrderScreen = ({ match }) => {
     }
 
     const addPayPalScript = async () => {
-      const { data: clientId } = await axios.get("/api/config/paypal");
+      const { data: clientId } = await axios.get(
+        `${process.env.REACT_APP_URL_API}/api/config/paypal`
+      );
       const script = document.createElement("script");
       script.type = "text/javascript";
       script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
@@ -106,9 +108,9 @@ const OrderScreen = ({ match }) => {
     <Message variant="danger">{error}</Message>
   ) : (
     <>
-      <h1>Đơn hàng {order._id}</h1>
-      <Row>
+      <Row style={{ width: "100%", padding: "0 20px" }}>
         <Col md={8}>
+          <h1>Đơn hàng {order._id}</h1>
           <ListGroup variant="flush">
             <ListGroup.Item>
               <h2>Thông tin vận chuyển</h2>
@@ -155,7 +157,7 @@ const OrderScreen = ({ match }) => {
                 <Message>Giỏ hàng đang trống</Message>
               ) : (
                 <ListGroup variant="flush">
-                  {order.orderItems.map((item, index) => (
+                  {order.orderItems?.map((item, index) => (
                     <ListGroup.Item key={index}>
                       <Row>
                         <Col md={1}>
@@ -213,19 +215,21 @@ const OrderScreen = ({ match }) => {
                   <Col>{order.totalPrice} $</Col>
                 </Row>
               </ListGroup.Item>
-              {!order.isPaid && order.user._id === userInfo._id && (
-                <ListGroup.Item>
-                  {loadingPay && <Loader />}
-                  {!sdkReady ? (
-                    <Loader />
-                  ) : (
-                    <PayPalButton
-                      amount={order.totalPrice}
-                      onSuccess={successPaymentHandler}
-                    />
-                  )}
-                </ListGroup.Item>
-              )}
+              {!order.isPaid &&
+                order.paymentMethod === "PayPal" &&
+                order.user._id === userInfo._id && (
+                  <ListGroup.Item>
+                    {loadingPay && <Loader />}
+                    {!sdkReady ? (
+                      <Loader />
+                    ) : (
+                      <PayPalButton
+                        amount={order.totalPrice}
+                        onSuccess={successPaymentHandler}
+                      />
+                    )}
+                  </ListGroup.Item>
+                )}
               {loadingDeliver && <Loader />}
               {userInfo &&
                 userInfo.isAdmin &&

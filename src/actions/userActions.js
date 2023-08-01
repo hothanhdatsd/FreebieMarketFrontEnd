@@ -18,7 +18,7 @@ import {
 import axios from "axios";
 import { ORDER_LIST_MY_RESET } from "../constants/orderConstant";
 
-export const login = (userName, password) => async (dispatch) => {
+export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({
       type: "USER_LOGIN_REQUEST",
@@ -29,9 +29,9 @@ export const login = (userName, password) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      "/api/users/login",
+      `${process.env.REACT_APP_URL_API}/api/users/login`,
       {
-        userName,
+        email,
         password,
       },
       config
@@ -53,7 +53,7 @@ export const login = (userName, password) => async (dispatch) => {
     });
   }
 };
-export const loginGoogle = () => async (dispatch) => {
+export const loginGoogle = (req, res) => async (dispatch) => {
   try {
     dispatch({
       type: "USER_LOGIN_REQUEST",
@@ -62,8 +62,12 @@ export const loginGoogle = () => async (dispatch) => {
       headers: {
         "Content-Type": "application/json",
       },
+      withCredentials: true,
     };
-    const { data } = await axios.get("/auth/successGG", config);
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_URL_API}/auth/successGG`,
+      config
+    );
 
     dispatch({
       type: "USER_LOGIN_SUCCESS",
@@ -90,8 +94,12 @@ export const loginFB = () => async (dispatch) => {
       headers: {
         "Content-Type": "application/json",
       },
+      withCredentials: true,
     };
-    const { data } = await axios.get("/auth/successFB", config);
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_URL_API}/auth/successFB`,
+      config
+    );
 
     dispatch({
       type: "USER_LOGIN_SUCCESS",
@@ -125,49 +133,48 @@ export const logout = () => (dispatch) => {
   });
 };
 
-export const register =
-  (name, email, password, userName) => async (dispatch) => {
-    try {
-      dispatch({
-        type: USER_REGISTER_REQUEST,
-      });
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      const { data } = await axios.post(
-        "/api/users",
-        {
-          name,
-          userName,
-          password,
-          email,
-        },
-        config
-      );
+export const register = (name, email, password) => async (dispatch) => {
+  try {
+    dispatch({
+      type: USER_REGISTER_REQUEST,
+    });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    };
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_URL_API}/api/users`,
+      {
+        name,
+        password,
+        email,
+      },
+      config
+    );
 
-      dispatch({
-        type: USER_REGISTER_SUCCESS,
-        payload: data,
-      });
+    dispatch({
+      type: USER_REGISTER_SUCCESS,
+      payload: data,
+    });
 
-      dispatch({
-        type: USER_LOGIN_SUCCESS,
-        payload: data,
-      });
+    dispatch({
+      type: USER_LOGIN_SUCCESS,
+      payload: data,
+    });
 
-      localStorage.setItem("userInfo", JSON.stringify(data));
-    } catch (error) {
-      dispatch({
-        type: USER_REGISTER_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
-      });
-    }
-  };
+    localStorage.setItem("userInfo", JSON.stringify(data));
+  } catch (error) {
+    dispatch({
+      type: USER_REGISTER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
 export const getUserDetails = (id) => async (dispatch, getState) => {
   try {
@@ -185,7 +192,10 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/users/${id}`, config);
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_URL_API}/api/users/${id}`,
+      config
+    );
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
@@ -222,7 +232,11 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.put(`/api/users/profile`, user, config);
+    const { data } = await axios.put(
+      `${process.env.REACT_APP_URL_API}/api/users/profile`,
+      user,
+      config
+    );
 
     dispatch({
       type: "USER_UPDATE_PROFILE_SUCCESS",
@@ -255,7 +269,10 @@ export const listUsers = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/users`, config);
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_URL_API}/api/users`,
+      config
+    );
 
     dispatch({
       type: "USER_LIST_SUCCESS",
@@ -288,7 +305,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
       },
     };
 
-    axios.delete(`/api/users/${id}`, config);
+    axios.delete(`${process.env.REACT_APP_URL_API}/api/users/${id}`, config);
 
     dispatch({
       type: "USER_DELETE_SUCCESS",
@@ -321,7 +338,11 @@ export const updateUser = (user) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(`/api/users/${user._id}`, user, config);
+    const { data } = await axios.put(
+      `${process.env.REACT_APP_URL_API}/api/users/${user._id}`,
+      user,
+      config
+    );
 
     dispatch({
       type: "USER_UPDATE_SUCCESS",

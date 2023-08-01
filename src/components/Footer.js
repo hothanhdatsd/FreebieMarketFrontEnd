@@ -1,16 +1,18 @@
 import React from "react";
 // import { Container, Row, Col } from "react-bootstrap";
+import logo from "../images/logo.png";
 import { CDBFooter, CDBBox, CDBBtn, CDBIcon } from "cdbreact";
 import "../index.css";
 const Footer = () => {
   return (
     <CDBFooter
       style={{
-        position: "absolute",
         bottom: "0",
-        width: "100%",
         backgroundColor: "#212529",
         color: "#fff",
+        width: "100%",
+        clear: "both",
+        position: "relative",
       }}
       className="shadow"
     >
@@ -18,17 +20,17 @@ const Footer = () => {
         display="flex"
         flex="column"
         className="mx-auto py-5"
-        style={{ width: "90%" }}
+        style={{ width: "100%", padding: "0 20px" }}
       >
         <CDBBox display="flex" justifyContent="between" className="flex-wrap">
           <CDBBox>
             <a href="/" className="d-flex align-items-center p-0 text-dark">
-              {/* <img alt="logo" src="logo" width="30px" /> */}
+              <img alt="logo" src={logo} width="30px" />
               <span
                 className="ml-3 h5 font-weight-bold "
                 style={{ color: "#fff" }}
               >
-                NhaXinh
+                FreebieMarket
               </span>
             </a>
             <p className="my-3" style={{ width: "250px" }}>
