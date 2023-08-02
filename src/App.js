@@ -29,7 +29,7 @@ import CreateProductScreen from "./screens/CreateProductScreen";
 import CreateTypeProductScreen from "./screens/CreateTypeProduct";
 import TypeProductListScreen from "./screens/TypeProductListScreen";
 import TypeProductEditScreen from "./screens/TypeProductEditScreen";
-import Home from "./AdminUi/Home"
+import Home from "./AdminUi/Home";
 const App = () => {
   const location = useLocation();
 
@@ -91,8 +91,8 @@ const App = () => {
         />
         <Route path="/" element={<HomeScreen />} exact />
         <Route path="/admin/dashboard" element={<Home />} />
-        <Route path="/successGG" element={<SuccessGoogleScreen />} exact />
-        <Route path="/successFB" element={<SuccessFBScreen />} exact />
+        <Route path="/successGG" element={<SuccessGoogleScreen />} />
+        <Route path="/successFB" element={<SuccessFBScreen />} />
         <Route path="/auth/fail" element={<LoginFailScreen />} exact />
         <Route
           path="/admin/createproduct"
