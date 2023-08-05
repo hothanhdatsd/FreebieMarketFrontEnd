@@ -2,23 +2,26 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginGoogle } from "../actions/userActions";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const SuccessGoogleScreen = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(loginGoogle());
-    const handleBeforeUnload = () => {
-      window.opener.postMessage("reload", window.location.origin);
-    };
+    // const handleBeforeUnload = () => {
+    //   window.opener.postMessage("reload", window.location.origin);
+    // };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
+    // window.addEventListener("beforeunload", handleBeforeUnload);
 
     const timer = setTimeout(() => {
-      window.close();
-    }, 2000);
+      // window.close();
+      navigate("/");
+    }, 1000);
     return () => {
       clearTimeout(timer);
 
-      window.removeEventListener("beforeunload", handleBeforeUnload);
+      // window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [dispatch]);
 

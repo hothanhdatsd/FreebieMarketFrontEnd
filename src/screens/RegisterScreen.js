@@ -111,6 +111,7 @@ const RegisterScreen = ({ location }) => {
     //     </Col>
     //   </Row>
     // </FormContainer>
+
     <div className="logup">
       <div className="login-contain">
         <div className="login-top">
@@ -168,6 +169,8 @@ const RegisterScreen = ({ location }) => {
                 }}
               />
             </div>
+            {message && <Message variant="danger">{message}</Message>}
+            {error && <Message variant="danger">{error}</Message>}
             <div className="contain-checkbox">
               <input type="checkbox" />
               <p className="text fz18">Remember my prefence</p>

@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import FormContainer from "../components/FormContainer";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   FacebookLoginButton,
   GoogleLoginButton,
@@ -12,7 +14,6 @@ import {
 import { login } from "../actions/userActions";
 import logo from "../images/logo.png";
 import bgimage from "../images/bgimage.jpg";
-import AlertScreen from "./AlertScreen";
 const LoginScreen = ({ location }) => {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,6 +29,22 @@ const LoginScreen = ({ location }) => {
     e.preventDefault();
     dispatch(login(email, password));
   };
+
+  useEffect(() => {
+    if (error) {
+      toast("🦄 Password or Username invalid!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [error]);
+
   const loginGoogle = async () => {
     const googleURL = "http://localhost:5000/auth/google";
     const width = 500; // Desired width of the popup window
@@ -40,7 +57,7 @@ const LoginScreen = ({ location }) => {
     // Open the popup window with centered position
     window.open(
       googleURL,
-      "_blank",
+      "_parent",
       `width=${width},height=${height},left=${left},top=${top}`
     );
   };
@@ -56,7 +73,7 @@ const LoginScreen = ({ location }) => {
     // Open the popup window with centered position
     window.open(
       googleURL,
-      "_blank",
+      "_parent",
       `width=${width},height=${height},left=${left},top=${top}`
     );
   };
@@ -164,7 +181,7 @@ const LoginScreen = ({ location }) => {
             </button>
           </form>
         </div>
-        {error && <AlertScreen error={error} />}
+        <ToastContainer />
         <div className="container-bottom">
           <p className="text">Continue With</p>
           <div className="mb-3 contain-bottom">

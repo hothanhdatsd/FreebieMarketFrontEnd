@@ -69,7 +69,7 @@ const ProductListScreen = () => {
       dispatch(deleteProduct(id));
     }
   };
-  let VND = new Intl.NumberFormat("en-US", {
+  let VND = new Intl.NumberFormat("VND", {
     currency: "VND",
     style: "currency",
   });
@@ -137,6 +137,7 @@ const ProductListScreen = () => {
               <tr>
                 <th>ID</th>
                 <th>Tên</th>
+                <th>Loại</th>
                 <th>Giá</th>
                 <th>Loại</th>
               </tr>
@@ -146,7 +147,8 @@ const ProductListScreen = () => {
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
-                  <td>{VND.format(product.price)}đ</td>
+                  <td>{product?.category?.name}</td>
+                  <td>{VND.format(product.price)}</td>
                   <td>
                     <LinkContainer to={`/admin/product/${product._id}/edit`}>
                       <Button variant="light" className="btn-sm">

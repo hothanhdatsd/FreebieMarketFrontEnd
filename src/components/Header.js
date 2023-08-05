@@ -22,7 +22,7 @@ const Header = () => {
   const logoutHandler = () => {
     dispatch(logout());
     navigate("/");
-    localStorage.clear();
+    sessionStorage.clear();
   };
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;

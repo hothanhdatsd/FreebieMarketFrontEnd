@@ -1,35 +1,41 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useParams, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import FormContainer from "../components/FormContainer";
 import { Form, Button } from "react-bootstrap";
 import Message from "../components/Message";
-import Loader from "../components/Loader";
 const CreateTypeProductScreen = () => {
   let navigate = useNavigate();
 
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-
-  const dispatch = useDispatch();
+  const [error, setError] = useState(null);
   const userLogin = useSelector((state) => state.userLogin);
 
   const { userInfo } = userLogin;
   const submitHandler = async (e) => {
     e.preventDefault();
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-    await axios.post(
-      `${process.env.REACT_APP_URL_API}/api/typeproducts`,
-      { name, description },
-      config
-    );
-    setName("");
-    setDescription("");
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      await axios.post(
+        `${process.env.REACT_APP_URL_API}/api/typeproducts`,
+        { name },
+        config
+      );
+      setName("");
+      setError(null); // Reset the form input
+      navigate("/admin/typeproductlist");
+    } catch (error) {
+      setError(error.response?.data?.message || "Something went wrong");
+    }
+  };
+  const handleNameChange = (e) => {
+    setName(e.target.value.trim());
   };
   useEffect(() => {
     if (!!userInfo) {
@@ -50,22 +56,12 @@ const CreateTypeProductScreen = () => {
           <Form.Group controlId="name">
             <Form.Label>Tên</Form.Label>
             <Form.Control
-              type="name"
-              placeholder="Nhập tên"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-          <Form.Group controlId="description">
-            <Form.Label>Chi tiết</Form.Label>
-            <Form.Control
               type="text"
-              placeholder="Nhập chi tiết "
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Nhập tên"
+              onChange={handleNameChange}
             ></Form.Control>
           </Form.Group>
-
+          {error && <Message variant="danger">{error}</Message>}
           <Button type="submit" variant="primary">
             Cập nhật
           </Button>

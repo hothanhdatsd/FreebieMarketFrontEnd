@@ -15,6 +15,7 @@ const CreateProductScreen = () => {
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState("");
   const [category, setCategory] = useState("");
+  const [categoryId, setCategoryId] = useState();
   const [countInStock, setCountInStock] = useState("Loai san pham");
   const [description, setDescription] = useState("");
   const [uploading, setUploading] = useState(false);
@@ -26,7 +27,10 @@ const CreateProductScreen = () => {
     dispatch(
       createProduct({
         name,
-        category,
+        category: {
+          name: category,
+          category: categoryId,
+        },
         image,
         price,
         countInStock,
@@ -35,13 +39,20 @@ const CreateProductScreen = () => {
     );
   };
   const typeproductList = useSelector((state) => state.typeProductList);
-  const { loading, error, typeProducts, page, pages } = typeproductList;
+  const { typeProducts, page, pages } = typeproductList;
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const product = useSelector((state) => state.productCreate);
+  const { loading, error, success } = product;
+
   useEffect(() => {
     dispatch(listTypeProducts());
   }, [dispatch]);
+  useEffect(() => {
+    if (success) {
+      dispatch({ type: "PRODUCT_CREATE_RESET" });
+      navigate("/admin/productlist");
+    }
+  }, [success, navigate]);
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
@@ -69,7 +80,8 @@ const CreateProductScreen = () => {
     }
   };
   const handleSelectChange = (event) => {
-    setCategory(event.target.value);
+    setCategoryId(event.target.value);
+    setCategory(event.target.options[event.target.selectedIndex].dataset.name);
   };
   return (
     <>
@@ -146,7 +158,11 @@ const CreateProductScreen = () => {
               onChange={handleSelectChange}
             >
               {typeProducts?.map((item) => (
-                <option key={item?._id} value={item?._id}>
+                <option
+                  data-name={item?.name}
+                  key={item?._id}
+                  value={item?._id}
+                >
                   {item?.name}
                 </option>
               ))}

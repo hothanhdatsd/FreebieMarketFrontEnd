@@ -29,7 +29,10 @@ import {
   orderListMyReducer,
   orderListReducer,
 } from "./reducers/orderReducer";
-import { typeProductListReducer } from "./reducers/typeProductReducer";
+import {
+  typeProductListReducer,
+  typeProductDeleteReducer,
+} from "./reducers/typeProductReducer";
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -54,16 +57,17 @@ const reducer = combineReducers({
   orderListMy: orderListMyReducer,
   orderList: orderListReducer,
   typeProductList: typeProductListReducer,
+  typeProductDelete: typeProductDeleteReducer,
 });
-const cartItemsFromStorage = localStorage.getItem("cartItems")
-  ? JSON.parse(localStorage.getItem("cartItems"))
+const cartItemsFromStorage = sessionStorage.getItem("cartItems")
+  ? JSON.parse(sessionStorage.getItem("cartItems"))
   : [];
 
-const userInfoFromStorage = localStorage.getItem("userInfo")
-  ? JSON.parse(localStorage.getItem("userInfo"))
+const userInfoFromStorage = sessionStorage.getItem("userInfo")
+  ? JSON.parse(sessionStorage.getItem("userInfo"))
   : null;
-const shippingAddressFromStorage = localStorage.getItem("shippingAddress")
-  ? JSON.parse(localStorage.getItem("shippingAddress"))
+const shippingAddressFromStorage = sessionStorage.getItem("shippingAddress")
+  ? JSON.parse(sessionStorage.getItem("shippingAddress"))
   : null;
 
 const initialState = {

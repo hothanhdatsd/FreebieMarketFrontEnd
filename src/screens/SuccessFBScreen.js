@@ -1,24 +1,27 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { loginFB } from "../actions/userActions";
+import { useNavigate } from "react-router-dom";
 
 const SuccessFBScreen = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(loginFB());
-    const handleBeforeUnload = () => {
-      window.opener.postMessage("reload", window.location.origin);
-    };
+    // const handleBeforeUnload = () => {
+    //   window.opener.postMessage("reload", window.location.origin);
+    // };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
+    // window.addEventListener("beforeunload", handleBeforeUnload);
 
     const timer = setTimeout(() => {
       window.close();
-    }, 2000);
+      navigate("/");
+    }, 1000);
     return () => {
       clearTimeout(timer);
 
-      window.removeEventListener("beforeunload", handleBeforeUnload);
+      // window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, []);
   return (

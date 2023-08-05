@@ -21,7 +21,7 @@ const CartScreen = (match, location, history) => {
   let exam = useLocation().search;
   const qty = exam ? Number(exam.split("=")[1]) : 1;
   const dispatch = useDispatch();
-  const rf = localStorage.getItem("cartItems");
+  const rf = sessionStorage.getItem("cartItems");
   useEffect(() => {
     if (productId) {
       dispatch(addToCart(productId, qty));

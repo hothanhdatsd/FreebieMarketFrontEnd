@@ -42,7 +42,7 @@ export const login = (email, password) => async (dispatch) => {
       payload: data,
     });
 
-    localStorage.setItem("userInfo", JSON.stringify(data));
+    sessionStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
@@ -73,8 +73,7 @@ export const loginGoogle = (req, res) => async (dispatch) => {
       type: "USER_LOGIN_SUCCESS",
       payload: data,
     });
-
-    localStorage.setItem("userInfo", JSON.stringify(data));
+    sessionStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
@@ -106,7 +105,7 @@ export const loginFB = () => async (dispatch) => {
       payload: data,
     });
 
-    localStorage.setItem("userInfo", JSON.stringify(data));
+    sessionStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
@@ -118,7 +117,7 @@ export const loginFB = () => async (dispatch) => {
   }
 };
 export const logout = () => (dispatch) => {
-  localStorage.removeItem("userInfo");
+  sessionStorage.removeItem("userInfo");
   dispatch({
     type: USER_LOGOUT,
   });
@@ -164,7 +163,7 @@ export const register = (name, email, password) => async (dispatch) => {
       payload: data,
     });
 
-    localStorage.setItem("userInfo", JSON.stringify(data));
+    sessionStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: USER_REGISTER_FAIL,

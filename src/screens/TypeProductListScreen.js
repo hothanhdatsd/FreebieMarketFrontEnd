@@ -3,25 +3,37 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { Table, Button, Row, Col, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { listTypeProducts } from "../actions/typeProductActions.js";
+import {
+  listTypeProducts,
+  deleteTypeProduct,
+} from "../actions/typeProductActions.js";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import Paginate from "../components/Paginate";
 
 import { PRODUCT_CREATE_RESET } from "../constants/productConstant";
+import axios from "axios";
 
 const TypeProductListScreen = () => {
   const { pageNumber } = useParams();
   const pageNumberr = pageNumber || 1;
 
   const dispatch = useDispatch();
-
+  //danh sach loai san pham
   const typeproductList = useSelector((state) => state.typeProductList);
   const { loading, error, typeProducts, page, pages } = typeproductList;
+  //xoa loai san pham
+  const typeProductDelete = useSelector((state) => state.typeProductDelete);
+  const { errorType, loadingType, successType } = typeProductDelete;
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  const deleteHandler = async (id) => {
+    dispatch(deleteTypeProduct(id));
+  };
   useEffect(() => {
     dispatch(listTypeProducts());
-  }, [dispatch]);
+  }, [dispatch, successType]);
   return (
     <>
       <Row
@@ -69,8 +81,6 @@ const TypeProductListScreen = () => {
               <tr>
                 <th>ID</th>
                 <th>Tên</th>
-                <th>Chi tiết</th>
-                {/* <th>Loại</th> */}
               </tr>
             </thead>
             <tbody>
@@ -78,8 +88,6 @@ const TypeProductListScreen = () => {
                 <tr key={typeproduct._id}>
                   <td>{typeproduct._id}</td>
                   <td>{typeproduct.name}</td>
-                  {/* <td>{VND.format(typeproduct.price)}đ</td> */}
-                  <td>{typeproduct.description}</td>
                   <td>
                     <LinkContainer
                       to={`/admin/typeproductlist/${typeproduct._id}/edit`}
@@ -91,7 +99,7 @@ const TypeProductListScreen = () => {
                     <Button
                       variant="danger"
                       className="btn-sm"
-                      //       onClick={() => deleteHandler(product._id)}
+                      onClick={() => deleteHandler(typeproduct._id)}
                     >
                       <i className="fas fa-trash"></i>
                     </Button>

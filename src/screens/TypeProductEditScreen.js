@@ -11,33 +11,13 @@ import { PRODUCT_UPDATE_RESET } from "../constants/productConstant";
 import { detailTypeProduct } from "../actions/typeProductActions.js";
 const TypeProductEditScreen = ({ match, location }) => {
   let { id } = useParams();
-  console.log(id);
   let navigate = useNavigate();
   const productId = id;
+  const [error, setError] = useState(null);
 
-  const [data, setData] = useState(null);
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
 
   const dispatch = useDispatch();
-
-  //   useEffect(() => {
-  //     if (successUpdate) {
-  //       dispatch({ type: PRODUCT_UPDATE_RESET });
-  //       navigate("/admin/productlist");
-  //     } else {
-  //       if (!product.name || product._id !== productId) {
-  //         dispatch(listProductDetails(productId));
-  //       } else {
-  //         setName(product.name);
-  //         setPrice(product.price);
-  //         setImage(product.image);
-  //         setCategory(product.category);
-  //         setCountInStock(product.countInStock);
-  //         setDescription(product.description);
-  //       }
-  //     }
-  //   }, [navigate, dispatch, product, productId, successUpdate]);
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
@@ -55,24 +35,33 @@ const TypeProductEditScreen = ({ match, location }) => {
         config
       );
       setName(data.name);
-      setDescription(data.description);
     };
     fetchApi();
-  }, [dispatch]);
-  const submitHandler = (e) => {
+  }, [dispatch, id, userInfo.token]);
+  const submitHandler = async (e) => {
     e.preventDefault();
-    dispatch(
-      updateProduct({
-        _id: productId,
-        name,
-        description,
-      })
-    );
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_URL_API}/api/typeproducts/${id}`,
+        { name },
+        config
+      );
+      navigate("/admin/typeproductlist");
+    } catch (e) {
+      setError(e.response?.data?.message || "Something went wrong");
+    }
   };
-  console.log(data);
+
   return (
     <>
-      <Link to="/admin/productlist" className="btn btn-light my-3">
+      <Link to="/admin/typeproductlist" className="btn btn-light my-3">
         Trở về
       </Link>
 
@@ -95,16 +84,7 @@ const TypeProductEditScreen = ({ match, location }) => {
               onChange={(e) => setName(e.target.value)}
             ></Form.Control>
           </Form.Group>
-          <Form.Group controlId="description">
-            <Form.Label>Chi tiết</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Nhập chi tiết "
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-
+          {error && <Message variant="danger">{error}</Message>}
           <Button type="submit" variant="primary">
             Cập nhật
           </Button>

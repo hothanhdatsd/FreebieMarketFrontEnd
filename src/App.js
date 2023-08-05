@@ -30,6 +30,7 @@ import CreateTypeProductScreen from "./screens/CreateTypeProduct";
 import TypeProductListScreen from "./screens/TypeProductListScreen";
 import TypeProductEditScreen from "./screens/TypeProductEditScreen";
 import Home from "./AdminUi/Home";
+import VnpaymentScreen from "./screens/VnpaymentScreen";
 const App = () => {
   const location = useLocation();
 
@@ -40,20 +41,18 @@ const App = () => {
     location.pathname === "/auth/fail" ||
     location.pathname === "/login" ||
     location.pathname === "/register";
-  useEffect(() => {
-    const handleMessage = (event) => {
-      if (event.data === "reload") {
-        window.location.reload();
-      }
-    };
+  // useEffect(() => {
+  //   const handlePageHide = () => {
+  //     // Your custom logic for when the user closes the browser/tab.
+  //     sessionStorage.removeItem("userInfo");
+  //   };
 
-    window.addEventListener("message", handleMessage);
+  //   document.addEventListener("visibilitychange", handlePageHide);
 
-    // Clean up the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("message", handleMessage);
-    };
-  }, []);
+  //   return () => {
+  //     document.removeEventListener("visibilitychange", handlePageHide);
+  //   };
+  // }, []);
   return (
     <div style={{ height: "100vh", width: "100%" }}>
       {!shouldExcludeHeaderFooter && <Header />}
@@ -113,6 +112,7 @@ const App = () => {
           element={<TypeProductEditScreen />}
           exact
         />
+        <Route path="/create_payment_url" element={<VnpaymentScreen />} exact />
       </Routes>
       {!shouldExcludeHeaderFooter && <Footer />}
     </div>
