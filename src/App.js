@@ -96,7 +96,7 @@ const App = () => {
         />
         <Route path="/" element={<HomeScreen />} exact />
         <Route path="/admin/dashboard" element={<Home />} />
-        <Route path="/successGG" element={<SuccessGoogleScreen />} exact />
+        <Route path="/successgg" element={<SuccessGoogleScreen />} exact />
         <Route path="/successFB" element={<SuccessFBScreen />} />
         <Route path="/auth/fail" element={<LoginFailScreen />} exact />
         <Route
