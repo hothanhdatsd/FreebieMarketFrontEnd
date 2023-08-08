@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { loginFB } from "../actions/userActions";
+import { loginFB } from "../../actions/userActions";
 import { useNavigate } from "react-router-dom";
 
 const SuccessFBScreen = () => {
@@ -15,7 +15,7 @@ const SuccessFBScreen = () => {
     // window.addEventListener("beforeunload", handleBeforeUnload);
 
     const timer = setTimeout(() => {
-      window.close();
+      // window.close();
       navigate("/");
     }, 1000);
     return () => {
@@ -23,7 +23,7 @@ const SuccessFBScreen = () => {
 
       // window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, []);
+  }, [dispatch, navigate]);
   return (
     <div style={{ textAlign: "center", paddingTop: "50px" }}>
       <h2>Login Successful!</h2>

@@ -13,8 +13,7 @@ import { logout } from "../actions/userActions";
 import SearchBox from "../components/SearchBox";
 import "../bootstrap.min.css";
 import logo from "../images/logo.png";
-import { SearchOutline } from "react-ionicons";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -66,6 +65,9 @@ const Header = () => {
                   </LinkContainer>
                   <LinkContainer to="/admin/typeproductlist">
                     <NavDropdown.Item>Loại sản phẩm</NavDropdown.Item>
+                  </LinkContainer>{" "}
+                  <LinkContainer to="/admin/discountlist">
+                    <NavDropdown.Item>Mã giảm giá</NavDropdown.Item>
                   </LinkContainer>
                   <LinkContainer to="/admin/orderlist">
                     <NavDropdown.Item>Đặt hàng</NavDropdown.Item>

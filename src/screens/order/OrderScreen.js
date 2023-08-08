@@ -4,17 +4,18 @@ import { PayPalButton } from "react-paypal-button-v2";
 import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import Loader from "../components/Loader";
-import Message from "../components/Message";
+import Loader from "../../components/Loader";
+import Message from "../../components/Message";
+import moment from "moment";
 import {
   getOrderDetails,
   payOrder,
   deliverOrder,
-} from "../actions/orderActions";
+} from "../../actions/orderActions";
 import {
   ORDER_PAY_RESET,
   ORDER_DELIVER_RESET,
-} from "../constants/orderConstant";
+} from "../../constants/orderConstant";
 
 const OrderScreen = ({ match }) => {
   const dispatch = useDispatch();
@@ -37,21 +38,37 @@ const OrderScreen = ({ match }) => {
   const { userInfo } = userLogin;
 
   if (!loading) {
-    const addDecimals = (num) => {
-      return Math.round(num / 24000).toFixed(1);
-    };
-    // order.itemsPrice = order.orderItems.reduce(
-    //   (acc, item) => acc + item.price * item.qty,
-    //   0
+    // const addDecimals = (num) => {
+    //   return Math.round(num / 24000).toFixed(1);
+    // };
+    order.itemsPrice = order.orderItems.reduce(
+      (acc, item) => acc + item.price * item.qty,
+      0
+    );
+    // order.itemsPrice = addDecimals(
+    //   order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
     // );
-    order.itemsPrice = addDecimals(
-      order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+    order.itemsPrice = order.orderItems.reduce(
+      (acc, item) => acc + item.price * item.qty,
+      0
     );
   }
   let VND = new Intl.NumberFormat("en-US", {
     currency: "VND",
     style: "currency",
   });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_URL_API}/api/payment/create_payment_url`,
+      {
+        amount: order?.totalPrice,
+        orderId: order?._id,
+        language: "vn",
+      }
+    );
+    window.open(data, "_self");
+  };
 
   useEffect(() => {
     if (!userInfo) {
@@ -94,7 +111,6 @@ const OrderScreen = ({ match }) => {
   ]);
 
   const successPaymentHandler = (paymentResult) => {
-    console.log(paymentResult);
     dispatch(payOrder(orderId, paymentResult));
   };
 
@@ -144,7 +160,7 @@ const OrderScreen = ({ match }) => {
               </p>
               {order.isPaid ? (
                 <Message variant="success">
-                  Thành toán ngày: {order.paidAt}
+                  Thanh toán ngày: {moment(order.paidAt).format("YYYY/MM/DD")}
                 </Message>
               ) : (
                 <Message variant="danger">Chưa thanh toán</Message>
@@ -174,8 +190,8 @@ const OrderScreen = ({ match }) => {
                           </Link>
                         </Col>
                         <Col md={4}>
-                          {item.qty} x {VND.format(item.price)} đ ={" "}
-                          {VND.format(item.qty * item.price)} đ
+                          {item.qty} x {VND.format(item.price)} ={" "}
+                          {VND.format(item.qty * item.price)}
                         </Col>
                       </Row>
                     </ListGroup.Item>
@@ -194,25 +210,25 @@ const OrderScreen = ({ match }) => {
               <ListGroup.Item>
                 <Row>
                   <Col>Đơn giá</Col>
-                  <Col>{order.itemsPrice} $</Col>
+                  <Col>{VND.format(order.itemsPrice)}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Phí vận chuyển</Col>
-                  <Col>{order.shippingPrice.toFixed(1)} $</Col>
+                  <Col>{VND.format(order.shippingPrice.toFixed(1))}</Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item>
+              {/* <ListGroup.Item>
                 <Row>
                   <Col>Mã giảm giá</Col>
-                  <Col>{order.taxPrice} $</Col>
+                  <Col>{order.taxPrice}</Col>
                 </Row>
-              </ListGroup.Item>
+              </ListGroup.Item> */}
               <ListGroup.Item>
                 <Row>
                   <Col>Tổng </Col>
-                  <Col>{order.totalPrice} $</Col>
+                  <Col>{VND.format(order.totalPrice)}</Col>
                 </Row>
               </ListGroup.Item>
               {!order.isPaid &&
@@ -230,6 +246,14 @@ const OrderScreen = ({ match }) => {
                     )}
                   </ListGroup.Item>
                 )}
+              {!order.isPaid &&
+                order.paymentMethod === "vnPay" &&
+                order.user._id === userInfo._id && (
+                  <ListGroup.Item>
+                    <Button onClick={handleSubmit}>Thanh toán VNPay</Button>
+                  </ListGroup.Item>
+                )}
+
               {loadingDeliver && <Loader />}
               {userInfo &&
                 userInfo.isAdmin &&

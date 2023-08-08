@@ -3,12 +3,15 @@ import axios from "axios";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import FormContainer from "../components/FormContainer";
-import { listProductDetails, updateProduct } from "../actions/productActions";
-import { PRODUCT_UPDATE_RESET } from "../constants/productConstant";
-import { listTypeProducts } from "../actions/typeProductActions.js";
+import Message from "../../components/Message";
+import Loader from "../../components/Loader";
+import FormContainer from "../../components/FormContainer";
+import {
+  listProductDetails,
+  updateProduct,
+} from "../../actions/productActions";
+import { PRODUCT_UPDATE_RESET } from "../../constants/productConstant";
+import { listTypeProducts } from "../../actions/typeProductActions.js";
 
 const ProductEditScreen = ({ match, location }) => {
   let { id } = useParams();
@@ -28,9 +31,6 @@ const ProductEditScreen = ({ match, location }) => {
 
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
-
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
 
   const productUpdate = useSelector((state) => state.productUpdate);
   const {
@@ -177,6 +177,7 @@ const ProductEditScreen = ({ match, location }) => {
               ></Form.Control>
             </Form.Group>
             <Form.Group>
+              <Form.Label>Loại sản phẩm </Form.Label>
               <Form.Select
                 aria-label="Default select example"
                 onChange={handleSelectChange}

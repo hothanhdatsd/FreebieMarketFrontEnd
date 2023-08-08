@@ -8,7 +8,7 @@ import {
 } from "../constants/typeProductConstant";
 import axios from "axios";
 export const listTypeProducts =
-  (keyword = "", pageNumber = "") =>
+  (pageNumber = "") =>
   async (dispatch, getState) => {
     try {
       dispatch({
@@ -26,7 +26,7 @@ export const listTypeProducts =
       };
 
       const { data } = await axios.get(
-        `${process.env.REACT_APP_URL_API}/api/typeproducts`,
+        `${process.env.REACT_APP_URL_API}/api/typeproducts?pageNumber=${pageNumber}`,
         config
       );
 

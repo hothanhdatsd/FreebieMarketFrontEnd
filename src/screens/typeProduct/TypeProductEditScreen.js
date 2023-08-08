@@ -3,12 +3,8 @@ import axios from "axios";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import FormContainer from "../components/FormContainer";
-import { listProductDetails, updateProduct } from "../actions/productActions";
-import { PRODUCT_UPDATE_RESET } from "../constants/productConstant";
-import { detailTypeProduct } from "../actions/typeProductActions.js";
+import Message from "../../components/Message";
+import FormContainer from "../../components/FormContainer";
 const TypeProductEditScreen = ({ match, location }) => {
   let { id } = useParams();
   let navigate = useNavigate();
@@ -48,7 +44,7 @@ const TypeProductEditScreen = ({ match, location }) => {
         },
       };
 
-      const { data } = await axios.post(
+      await axios.post(
         `${process.env.REACT_APP_URL_API}/api/typeproducts/${id}`,
         { name },
         config

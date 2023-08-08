@@ -1,16 +1,20 @@
 import React, { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Table, Button, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
-import { listUsers, deleteUser } from "../actions/userActions";
+import Message from "../../components/Message";
+import { listUsers, deleteUser } from "../../actions/userActions";
+import Paginate from "../../components/Paginate.js";
+
 const UserListScreen = ({ history }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { pageNumber } = useParams();
+  const pageNumberr = pageNumber || 1;
 
   const userList = useSelector((state) => state.userList);
-  const { loading, error, users } = userList;
+  const { loading, error, users, page, pages } = userList;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -20,18 +24,17 @@ const UserListScreen = ({ history }) => {
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
-      dispatch(listUsers());
+      dispatch(listUsers(pageNumberr));
     } else {
       navigate("/login");
     }
-  }, [dispatch, navigate, successDelete, userInfo]);
+  }, [dispatch, navigate, successDelete, userInfo, pageNumberr]);
 
-  const deleteHandler = (id) => {
+  const deleteHandler = async (id) => {
     dispatch(deleteUser(id));
   };
-
   return (
-    <Row style={{ padding: "0 20px" }}>
+    <Row style={{ padding: "0 20px", minHeight: "57%" }}>
       <h1>Người dùng</h1>
       {loading ? (
         <Message />
@@ -82,6 +85,7 @@ const UserListScreen = ({ history }) => {
           </tbody>
         </Table>
       )}
+      <Paginate page={page} pages={pages} isAdmin={true} user />
     </Row>
   );
 };

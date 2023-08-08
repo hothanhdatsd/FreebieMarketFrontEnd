@@ -33,8 +33,13 @@ import {
   typeProductListReducer,
   typeProductDeleteReducer,
 } from "./reducers/typeProductReducer";
+import {
+  discountDeleteReducer,
+  discountListReducer,
+} from "./reducers/discountReduces";
 
 const reducer = combineReducers({
+  //product
   productList: productListReducer,
   productDetails: productDetailsReducer,
   productDelete: productDeleteReducer,
@@ -43,6 +48,7 @@ const reducer = combineReducers({
   productReviewCreate: productReviewCreateReducer,
   productTopRated: productTopRatedReducer,
   cart: cartReducer,
+  //user
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
@@ -50,14 +56,19 @@ const reducer = combineReducers({
   userDelete: userDeleteReducer,
   userList: userListReducer,
   userUpdate: userUpdateReducer,
+  //order
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
   orderDeliver: orderDeliverReducer,
   orderListMy: orderListMyReducer,
   orderList: orderListReducer,
+  //type Product
   typeProductList: typeProductListReducer,
   typeProductDelete: typeProductDeleteReducer,
+  //discount
+  discountList: discountListReducer,
+  discountDelete: discountDeleteReducer,
 });
 const cartItemsFromStorage = sessionStorage.getItem("cartItems")
   ? JSON.parse(sessionStorage.getItem("cartItems"))
@@ -74,6 +85,7 @@ const initialState = {
   cart: {
     cartItems: cartItemsFromStorage,
     shippingAddress: shippingAddressFromStorage,
+    discount: 0,
   },
   userLogin: {
     userInfo: userInfoFromStorage,

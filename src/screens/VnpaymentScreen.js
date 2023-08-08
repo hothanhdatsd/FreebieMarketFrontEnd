@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 const VnpaymentScreen = () => {
   const [payment, setPayment] = useState();
   const [language, setLanguage] = useState("vn");
-  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { data } = await axios.post(
@@ -16,7 +15,7 @@ const VnpaymentScreen = () => {
         language,
       }
     );
-    window.open(data);
+    window.open(data, "_self");
   };
   const handleChangeTypePayment = (e) => {
     setPayment(e.target.value);

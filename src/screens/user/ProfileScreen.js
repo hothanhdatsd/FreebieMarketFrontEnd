@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { Table, Form, Button, Row, Col } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import { getUserDetails, updateUserProfile } from "../actions/userActions";
-import { listMyOrders } from "../actions/orderActions";
+import Message from "../../components/Message";
+import Loader from "../../components/Loader";
+import { getUserDetails, updateUserProfile } from "../../actions/userActions";
+import { listMyOrders } from "../../actions/orderActions";
+import moment from "moment";
 
 const ProfileScreen = () => {
   const [name, setName] = useState("");
@@ -154,11 +155,11 @@ const ProfileScreen = () => {
               {orders?.map((order) => (
                 <tr key={order._id}>
                   <td>{order._id}</td>
-                  <td>{order.createdAt.substring(0, 10)}</td>
+                  <td>{moment(order.createdAt).format("DD/MM/YYYY")}</td>
                   <td>{order.totalPrice}</td>
                   <td>
                     {order.isPaid ? (
-                      order.paidAt.substring(0, 10)
+                      order.paidAt
                     ) : (
                       <i className="fas fa-times" style={{ color: "red" }}></i>
                     )}

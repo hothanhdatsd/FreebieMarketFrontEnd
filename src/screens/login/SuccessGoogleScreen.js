@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { loginGoogle } from "../actions/userActions";
-import axios from "axios";
+import { loginGoogle } from "../../actions/userActions";
 import { useNavigate } from "react-router-dom";
 const SuccessGoogleScreen = () => {
   const dispatch = useDispatch();
@@ -23,7 +22,7 @@ const SuccessGoogleScreen = () => {
 
       // window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [dispatch]);
+  }, [dispatch, navigate]);
 
   return (
     <div style={{ textAlign: "center", paddingTop: "50px" }}>

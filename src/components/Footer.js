@@ -12,7 +12,7 @@ const Footer = () => {
         color: "#fff",
         width: "100%",
         clear: "both",
-        position: "relative",
+        posision: "absolute",
       }}
       className="shadow"
     >

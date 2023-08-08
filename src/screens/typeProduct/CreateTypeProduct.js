@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import { Form, Button } from "react-bootstrap";
-import Message from "../components/Message";
+import Message from "../../components/Message";
 const CreateTypeProductScreen = () => {
   let navigate = useNavigate();
 

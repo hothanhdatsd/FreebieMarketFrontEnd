@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
+import Message from "../../components/Message";
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import {
   Row,
@@ -12,7 +12,9 @@ import {
   Form,
   Button,
 } from "react-bootstrap";
-import { addToCart, removeFromCart } from "../actions/cartActions";
+import { addToCart, removeFromCart } from "../../actions/cartActions";
+import axios from "axios";
+import { saveDiscount } from "../../actions/cartActions.js";
 
 const CartScreen = (match, location, history) => {
   let navigate = useNavigate();
@@ -21,7 +23,10 @@ const CartScreen = (match, location, history) => {
   let exam = useLocation().search;
   const qty = exam ? Number(exam.split("=")[1]) : 1;
   const dispatch = useDispatch();
-  const rf = sessionStorage.getItem("cartItems");
+  const [name, setName] = useState("");
+  const [error, setError] = useState(null);
+  const [data, setData] = useState(null);
+
   useEffect(() => {
     if (productId) {
       dispatch(addToCart(productId, qty));
@@ -35,15 +40,44 @@ const CartScreen = (match, location, history) => {
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
+  };
+  const AppplyDiscount = async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_URL_API}/api/discount/value/${name}`,
+        config
+      );
+      setError(null);
+      setData(data);
+      setName("");
+      dispatch(saveDiscount(data?.value));
+      sessionStorage.setItem(
+        "discount",
+        JSON.stringify({
+          name: data?.name,
+          value: data?.value,
+        })
+      );
+    } catch (error) {
+      setData(null);
+      setError(error.response?.data?.message || "Something went wrong");
+    }
   };
 
   const checkOutHandler = () => {
     navigate("/login/?redirect=/shipping");
   };
   return (
-    <div>
+    <div style={{ minHeight: "57%" }}>
       <Row style={{ width: "100%", padding: "0 20px" }}>
         <h1>Giỏ hàng</h1>
         <Col md={8}>
@@ -125,13 +159,24 @@ const CartScreen = (match, location, history) => {
                   <Form.Control
                     placeholder="Mã giảm giá"
                     aria-describedby="basic-addon2"
+                    onChange={(e) => {
+                      setName(e.target.value.trim());
+                    }}
+                    value={name}
                   />
-                  <InputGroup.Text
+                  <Button
+                    onClick={AppplyDiscount}
                     style={{ backgroundColor: "#0B5ED7", color: "#fff" }}
                   >
                     Sử dụng
-                  </InputGroup.Text>
+                  </Button>
                 </InputGroup>
+                {error && <Message variant="danger">{error}</Message>}
+                {data?.value && (
+                  <Message variant="success">
+                    Đơn hàng của bạn được giảm {data?.value}%
+                  </Message>
+                )}
                 <Row>
                   <Col md={2} style={{ paddingRight: "0" }}>
                     Tổng :{" "}

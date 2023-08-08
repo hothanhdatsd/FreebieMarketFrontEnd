@@ -2,17 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, Form, Image, ListGroup, Button } from "react-bootstrap";
-import Rating from "../components/Rating";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import Meta from "../components/Meta";
+import Rating from "../../components/Rating";
+import Message from "../../components/Message";
+import Loader from "../../components/Loader";
+import Meta from "../../components/Meta";
 import {
   listProductDetails,
   createProductReview,
-} from "../actions/productActions";
-import "../index.css";
+} from "../../actions/productActions";
 
-import { PRODUCT_CREATE_REVIEW_RESET } from "../constants/productConstant";
+import { PRODUCT_CREATE_REVIEW_RESET } from "../../constants/productConstant";
 
 const ProductScreen = ({ match }) => {
   const [qty, setQty] = useState(1);

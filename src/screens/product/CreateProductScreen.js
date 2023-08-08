@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import { Form, Button } from "react-bootstrap";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import { listTypeProducts } from "../actions/typeProductActions.js";
-import { createProduct } from "../actions/productActions.js";
+import Loader from "../../components/Loader";
+import { listTypeProducts } from "../../actions/typeProductActions.js";
+import { createProduct } from "../../actions/productActions.js";
 const CreateProductScreen = () => {
   let navigate = useNavigate();
 
@@ -52,11 +51,11 @@ const CreateProductScreen = () => {
       dispatch({ type: "PRODUCT_CREATE_RESET" });
       navigate("/admin/productlist");
     }
-  }, [success, navigate]);
+  }, [success, navigate, dispatch]);
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append("file", file, "file");
     setUploading(true);
 
     try {
@@ -67,12 +66,11 @@ const CreateProductScreen = () => {
       };
 
       const { data } = await axios.post(
-        `${process.env.REACT_APP_URL_API}/api/upload`,
+        `${process.env.REACT_APP_URL_API}/uploads/cloudinary-upload`,
         formData,
         config
       );
-
-      setImage(data);
+      setImage(data.secure_url);
       setUploading(false);
     } catch (error) {
       console.error(error);
@@ -153,6 +151,7 @@ const CreateProductScreen = () => {
             ></Form.Control>
           </Form.Group>
           <Form.Group>
+            <Form.Label>Loại sản phẩm </Form.Label>
             <Form.Select
               aria-label="Default select example"
               onChange={handleSelectChange}
@@ -179,7 +178,7 @@ const CreateProductScreen = () => {
           </Form.Group>
 
           <Button type="submit" variant="primary">
-            Cập nhật
+            Xác nhận
           </Button>
         </Form>
       </FormContainer>

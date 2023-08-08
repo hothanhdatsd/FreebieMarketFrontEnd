@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Form, Button, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import FormContainer from "../components/FormContainer";
-import CheckoutSteps from "../components/CheckoutSteps";
-import { savePaymentMethod } from "../actions/cartActions.js";
+import FormContainer from "../../components/FormContainer";
+import CheckoutSteps from "../../components/CheckoutSteps";
+import { savePaymentMethod } from "../../actions/cartActions.js";
 
 const PaymentScreen = () => {
   let navigate = useNavigate();
@@ -39,7 +39,7 @@ const PaymentScreen = () => {
               label="PayPal or Credit Card"
               id="PayPal"
               name="paymentMethod"
-              value="PayPal"
+              value="payPal"
               Checked
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>
@@ -48,19 +48,19 @@ const PaymentScreen = () => {
               label="ShipCod"
               id="ShipCod"
               name="paymentMethod"
-              value="ShipCod"
+              value="shipCod"
               Checked
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>
-            {/* <Form.Check
+            <Form.Check
               type="radio"
-              label="Stripe"
-              id="Stripe"
+              label="vnPay"
+              id="vnPay"
               name="paymentMethod"
-              value="Stripe"
+              value="vnPay"
               Checked
               onChange={(e) => setPaymentMethod(e.target.value)}
-            ></Form.Check> */}
+            ></Form.Check>
           </Col>
         </Form.Group>
 

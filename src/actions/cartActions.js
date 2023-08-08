@@ -5,6 +5,7 @@ import {
   CART_REMOVE_ITEM,
   CART_SAVE_SHIPPING_ADDRESS,
   CART_SAVE_PAYMENT_METHOD,
+  CART_SAVE_DISCOUNT,
 } from "../constants/cartConstant";
 
 export const addToCart = (id, qty) => async (dispatch, getState) => {
@@ -55,4 +56,12 @@ export const savePaymentMethod = (data) => (dispatch) => {
     payload: data,
   });
   sessionStorage.setItem("paymentMethod", JSON.stringify(data));
+};
+
+export const saveDiscount = (data) => (dispatch) => {
+  dispatch({
+    type: CART_SAVE_DISCOUNT,
+    payload: data,
+  });
+  sessionStorage.setItem("discount", JSON.stringify(data));
 };

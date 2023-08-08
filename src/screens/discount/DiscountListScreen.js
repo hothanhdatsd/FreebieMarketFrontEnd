@@ -1,41 +1,48 @@
 import React, { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { Table, Button, Row, Col, Container } from "react-bootstrap";
+import { Table, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  listTypeProducts,
-  deleteTypeProduct,
-} from "../actions/typeProductActions.js";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import Paginate from "../components/Paginate";
 
-import { PRODUCT_CREATE_RESET } from "../constants/productConstant";
-import axios from "axios";
+import Message from "../../components/Message.js";
+import Paginate from "../../components/Paginate.js";
+import moment from "moment";
+import { listDiscount, deleteDiscount } from "../../actions/discountActions.js";
 
-const TypeProductListScreen = () => {
+const DiscountListScreen = () => {
   const { pageNumber } = useParams();
   const pageNumberr = pageNumber || 1;
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  //danh sach loai san pham
-  const typeproductList = useSelector((state) => state.typeProductList);
-  const { loading, error, typeProducts, page, pages } = typeproductList;
-  //xoa loai san pham
-  const typeProductDelete = useSelector((state) => state.typeProductDelete);
-  const { errorType, loadingType, successType } = typeProductDelete;
+  //danh sach ma giam gia
+  const discounts = useSelector((state) => state.discountList);
+  const { loading, error, discountList, page, pages } = discounts;
+  //xoa ma giam gia
+  const discountDelete = useSelector((state) => state.discountDelete);
+  const {
+    success,
+    error: errorDelete,
+    loading: loadingDelete,
+  } = discountDelete;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const deleteHandler = async (id) => {
-    dispatch(deleteTypeProduct(id));
+    dispatch(deleteDiscount(id));
   };
   useEffect(() => {
-    dispatch(listTypeProducts());
-  }, [dispatch, successType]);
+    if (userInfo && userInfo.isAdmin) {
+      dispatch(listDiscount(pageNumberr));
+    } else {
+      navigate("/login");
+    }
+  }, [dispatch, navigate, userInfo, success, pageNumberr]);
   return (
-    <>
+    <div
+      style={{
+        minHeight: "57%",
+      }}
+    >
       <Row
         className="align-items-center"
         style={{
@@ -47,7 +54,7 @@ const TypeProductListScreen = () => {
         }}
       >
         <Col>
-          <h1>Loại sản phẩm</h1>
+          <h1>Mã giảm giá</h1>
         </Col>
         <Col
           style={{
@@ -56,20 +63,12 @@ const TypeProductListScreen = () => {
             justifyContent: "flex-end",
           }}
         >
-          {/* <Col className="text-right">
-            <Button className="my-3" onClick={createProductHandler}>
-              <i className="fas fa-plus"></i> Thêm sản phẩm
-            </Button>
-          </Col> */}
           <Col>
-            <Link to="/admin/createtypeproduct"> Thêm loại sản phẩm</Link>
+            <Link to="/admin/creatediscount"> Thêm mã giảm giá</Link>
           </Col>
         </Col>
       </Row>
-      {/* {loadingDelete && <Loader />}
-      {errorDelete && <Message variant="danger">{errorDelete}</Message>}
-      {loadingCreate && <Loader />}
-      {errorCreate && <Message variant="danger">{errorDelete}</Message>} */}
+
       {loading ? (
         <Message />
       ) : error ? (
@@ -79,18 +78,24 @@ const TypeProductListScreen = () => {
           <Table striped bordered hover responsive className="table-sm">
             <thead>
               <tr>
-                <th>ID</th>
+                <th>Id</th>
                 <th>Tên</th>
+                <th>Giá trị</th>
+                <th>Ngày bắt đầu</th>
+                <th>Ngày kết thúc</th>
               </tr>
             </thead>
             <tbody>
-              {typeProducts?.map((typeproduct) => (
-                <tr key={typeproduct._id}>
-                  <td>{typeproduct._id}</td>
-                  <td>{typeproduct.name}</td>
+              {discountList?.map((discount) => (
+                <tr key={discount._id}>
+                  <td>{discount._id}</td>
+                  <td>{discount.name}</td>
+                  <td>{discount.value}</td>
+                  <td>{moment(discount.startDate).format("DD/MM/YYYY")}</td>
+                  <td>{moment(discount.expDate).format("DD/MM/YYYY")}</td>
                   <td>
                     <LinkContainer
-                      to={`/admin/typeproductlist/${typeproduct._id}/edit`}
+                      to={`/admin/discountlist/${discount._id}/edit`}
                     >
                       <Button variant="light" className="btn-sm">
                         <i className="fas fa-edit"></i>
@@ -99,7 +104,7 @@ const TypeProductListScreen = () => {
                     <Button
                       variant="danger"
                       className="btn-sm"
-                      onClick={() => deleteHandler(typeproduct._id)}
+                      onClick={() => deleteHandler(discount._id)}
                     >
                       <i className="fas fa-trash"></i>
                     </Button>
@@ -108,11 +113,11 @@ const TypeProductListScreen = () => {
               ))}
             </tbody>
           </Table>
-          <Paginate page={page} pages={pages} isAdmin={true} />
+          <Paginate page={page} pages={pages} isAdmin={true} discount />
         </Row>
       )}
-    </>
+    </div>
   );
 };
 
-export default TypeProductListScreen;
+export default DiscountListScreen;

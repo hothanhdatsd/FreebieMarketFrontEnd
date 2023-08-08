@@ -2,30 +2,46 @@ import React, { useEffect } from "react";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import CheckoutSteps from "../components/CheckoutSteps";
-import Message from "../components/Message";
-import { createOrder } from "../actions/orderActions";
-import { updateProduct } from "../actions/productActions";
+import CheckoutSteps from "../../components/CheckoutSteps";
+import Message from "../../components/Message";
+import { createOrder } from "../../actions/orderActions";
+import { updateProduct } from "../../actions/productActions";
 
 const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
 
-  const addDecimals = (num) => {
-    return Math.round(num / 24000).toFixed(1);
-  };
+  // const addDecimals = (num) => {
+  //   return Math.round(num / 24000).toFixed(1);
+  // };
 
-  cart.itemsPrice = addDecimals(
-    cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+  // cart.itemsPrice = addDecimals(
+  //   cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+  // );
+  cart.itemsPrice = cart.cartItems.reduce(
+    (acc, item) => acc + item.price * item.qty,
+    0
   );
-  cart.shippingPrice = cart.itemsPrice * 0.05;
-  cart.taxPrice = 0;
-  cart.totalPrice = (
-    Number(cart.itemsPrice) +
-    Number(cart.shippingPrice) +
-    Number(cart.taxPrice)
-  ).toFixed(1);
+  if (cart.itemsPrice < 100000 && cart.itemsPrice < 200000) {
+    cart.shippingPrice = Math.floor(cart.itemsPrice * 0.1);
+  } else {
+    cart.shippingPrice = Math.floor(cart.itemsPrice * 0.2);
+  }
+
+  // cart.taxPrice = 0;
+  cart.discount !== 0
+    ? (cart.totalPrice = Math.floor(
+        Number(cart.itemsPrice) +
+          Number(cart.shippingPrice) -
+          (Number(cart.itemsPrice) + Number(cart.shippingPrice)) *
+            (Number(cart.discount) / 100)
+      ))
+    : (cart.totalPrice = Math.floor(
+        Number(cart.itemsPrice) + Number(cart.shippingPrice)
+      ));
+  // Number(cart.taxPrice)
+  // .toFixed(1);
 
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, success, error } = orderCreate;
@@ -37,7 +53,7 @@ const PlaceOrderScreen = ({ history }) => {
     if (success) {
       navigate(`/order/${order._id}`);
     }
-  }, [history, success, navigate]);
+  }, [history, success, navigate, order._id]);
 
   const placeOrderHandler = () => {
     dispatch(
@@ -46,7 +62,7 @@ const PlaceOrderScreen = ({ history }) => {
         shippingAddress: cart.shippingAddress,
         paymentMethod: cart.paymentMethod,
         itemsPrice: cart.itemsPrice,
-        taxPrice: cart.taxPrice,
+        // taxPrice: cart.taxPrice,
         shippingPrice: cart.shippingPrice,
         totalPrice: cart.totalPrice,
       }),
@@ -99,8 +115,8 @@ const PlaceOrderScreen = ({ history }) => {
                         </Col>{" "}
                         <Col md={4}>
                           {" "}
-                          {item.qty}x {VND.format(item.price)} đ ={" "}
-                          {VND.format(item.qty * item.price)} đ{" "}
+                          {item.qty}x {VND.format(item.price)} ={" "}
+                          {VND.format(item.qty * item.price)}{" "}
                         </Col>{" "}
                       </Row>{" "}
                     </ListGroup.Item>
@@ -118,23 +134,24 @@ const PlaceOrderScreen = ({ history }) => {
               </ListGroup.Item>{" "}
               <ListGroup.Item>
                 <Row>
-                  <Col> Đơn giá </Col> <Col> {cart.itemsPrice} $</Col>{" "}
+                  <Col> Đơn giá </Col>{" "}
+                  <Col> {VND.format(cart.itemsPrice)} </Col>{" "}
                 </Row>{" "}
               </ListGroup.Item>{" "}
               <ListGroup.Item>
                 <Row>
                   <Col> Phí vận chuyển </Col>{" "}
-                  <Col> {cart.shippingPrice} $ </Col>{" "}
+                  <Col> {VND.format(cart.shippingPrice)} </Col>{" "}
                 </Row>{" "}
               </ListGroup.Item>{" "}
-              <ListGroup.Item>
+              {/* <ListGroup.Item>
                 <Row>
-                  <Col> Mã giảm giá </Col> <Col> {cart.taxPrice} $ </Col>{" "}
+                  <Col> Mã giảm giá </Col> <Col> {cart.taxPrice}  </Col>{" "}
                 </Row>{" "}
-              </ListGroup.Item>{" "}
+              </ListGroup.Item>{" "} */}
               <ListGroup.Item>
                 <Row>
-                  <Col> Tổng </Col> <Col> {cart.totalPrice} $ </Col>{" "}
+                  <Col> Tổng </Col> <Col> {VND.format(cart.totalPrice)} </Col>{" "}
                 </Row>{" "}
               </ListGroup.Item>{" "}
               <ListGroup.Item>

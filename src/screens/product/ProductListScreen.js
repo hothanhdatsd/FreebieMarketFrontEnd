@@ -1,18 +1,17 @@
 import React, { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { Table, Button, Row, Col, Container } from "react-bootstrap";
+import { Table, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import Paginate from "../components/Paginate";
+import Message from "../../components/Message";
+import Loader from "../../components/Loader";
+import Paginate from "../../components/Paginate";
 import {
   listProducts,
   deleteProduct,
-  createProduct,
   importProduct,
-} from "../actions/productActions";
-import { PRODUCT_CREATE_RESET } from "../constants/productConstant";
+} from "../../actions/productActions";
+import { PRODUCT_CREATE_RESET } from "../../constants/productConstant";
 
 const ProductListScreen = () => {
   const { pageNumber } = useParams();
@@ -74,15 +73,16 @@ const ProductListScreen = () => {
     style: "currency",
   });
 
-  const createProductHandler = (product) => {
-    dispatch(createProduct());
-  };
   const importProductHandler = (product) => {
     dispatch(importProduct());
   };
 
   return (
-    <>
+    <div
+      style={{
+        minHeight: "57%",
+      }}
+    >
       <Row
         className="align-items-center"
         style={{
@@ -119,6 +119,15 @@ const ProductListScreen = () => {
             >
               <i className="fas fa-plus"></i> Nhập dữ liệu
             </Button>
+            {/* <Form.Group controlId="formFileSingle" className="mb-3">
+              <Form.Label>Single file input example</Form.Label>
+              <Form.Control type="file" onChange={handleFileChange} />
+              {selectedFile && (
+                <div>
+                  <p>Selected file: {selectedFile.name}</p>
+                </div>
+              )}
+            </Form.Group> */}
           </Col>
         </Col>
       </Row>
@@ -170,7 +179,7 @@ const ProductListScreen = () => {
           <Paginate page={page} pages={pages} isAdmin={true} />
         </Row>
       )}
-    </>
+    </div>
   );
 };
 

@@ -20,6 +20,7 @@ import {
   USER_DELETE_FAIL,
   USER_DELETE_REQUEST,
   USER_DELETE_SUCCESS,
+  USER_DELETE_RESET,
   USER_UPDATE_FAIL,
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
@@ -139,7 +140,9 @@ export const userListReducer = (
       return {
         loading: false,
         success: true,
-        users: action.payload,
+        users: action.payload.users,
+        page: action.payload.page,
+        pages: action.payload.pages,
       };
     case USER_LIST_FAIL:
       return {
@@ -176,7 +179,10 @@ export const userDeleteReducer = (state = {}, action) => {
       return {
         users: [],
       };
-
+    case USER_DELETE_RESET:
+      return {
+        success: false,
+      };
     default:
       return state;
   }

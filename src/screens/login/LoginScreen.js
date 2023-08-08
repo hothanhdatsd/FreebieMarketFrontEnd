@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate, NavLink } from "react-router-dom";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { useLocation, useNavigate, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import FormContainer from "../components/FormContainer";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   FacebookLoginButton,
   GoogleLoginButton,
 } from "react-social-login-buttons";
-import { login } from "../actions/userActions";
-import logo from "../images/logo.png";
-import bgimage from "../images/bgimage.jpg";
+import { login } from "../../actions/userActions";
+import logo from "../../images/logo.png";
+import bgimage from "../../images/bgimage.jpg";
 const LoginScreen = ({ location }) => {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
