@@ -66,7 +66,7 @@ const ProfileScreen = () => {
   };
 
   return (
-    <Row style={{ width: "100%", padding: "0 20px" }}>
+    <Row style={{ width: "100%", padding: "0 20px", minHeight: "57%" }}>
       <Col md={3}>
         <h2>Thông tin cá nhân</h2>
         {message && <Message variant="danger">{message}</Message>}
