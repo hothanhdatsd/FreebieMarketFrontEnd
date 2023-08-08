@@ -16,7 +16,7 @@ const SuccessGoogleScreen = () => {
     const timer = setTimeout(() => {
       // window.close();
       navigate("/");
-    }, 1000);
+    }, 20000);
     return () => {
       clearTimeout(timer);
 
