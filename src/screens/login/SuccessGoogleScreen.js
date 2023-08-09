@@ -6,8 +6,15 @@ const SuccessGoogleScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
-    dispatch(loginGoogle());
-    // const handleBeforeUnload = () => {
+    try {
+      dispatch(loginGoogle());
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      return message;
+    } // const handleBeforeUnload = () => {
     //   window.opener.postMessage("reload", window.location.origin);
     // };
 
