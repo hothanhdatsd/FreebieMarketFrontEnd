@@ -43,6 +43,7 @@ const LoginScreen = ({ location }) => {
   }, [error]);
 
   const loginGoogle = async () => {
+    // const googleURL = "http://localhost:5000/auth/google";
     const googleURL = "https://freebiemarketbe.onrender.com/auth/google";
     const width = 500; // Desired width of the popup window
     const height = 600; // Desired height of the popup window

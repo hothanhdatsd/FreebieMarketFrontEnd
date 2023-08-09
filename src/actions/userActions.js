@@ -65,7 +65,7 @@ export const loginGoogle = (req, res) => async (dispatch) => {
       withCredentials: true,
     };
     const { data } = await axios.get(
-      `${process.env.REACT_APP_URL_API}/auth/successGG`,
+      `${process.env.REACT_APP_URL_API}/auth/successgg`,
       config
     );
 

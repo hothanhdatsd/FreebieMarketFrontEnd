@@ -21,7 +21,7 @@ const SuccessGoogleScreen = () => {
       // clearTimeout(timer);
       // window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [dispatch]);
+  }, [dispatch, navigate]);
 
   return (
     <div style={{ textAlign: "center", paddingTop: "50px" }}>
