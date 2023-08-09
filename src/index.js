@@ -5,16 +5,16 @@ import "./index.css";
 import App from "./App";
 import "./bootstrap.min.css";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import React from "react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Router>
+  <BrowserRouter>
     <Provider store={store}>
       <App />
     </Provider>
-  </Router>
+  </BrowserRouter>
 );
 reportWebVitals();
 
