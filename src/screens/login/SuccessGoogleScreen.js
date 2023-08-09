@@ -6,15 +6,19 @@ const SuccessGoogleScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
-    try {
-      dispatch(loginGoogle());
-    } catch (error) {
-      const message =
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message;
-      return message;
-    } // const handleBeforeUnload = () => {
+    const fetch = async () => {
+      try {
+        await dispatch(loginGoogle());
+      } catch (error) {
+        const message =
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message;
+        return message;
+      }
+    };
+    fetch();
+    // const handleBeforeUnload = () => {
     //   window.opener.postMessage("reload", window.location.origin);
     // };
 
