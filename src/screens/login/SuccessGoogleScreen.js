@@ -13,13 +13,12 @@ const SuccessGoogleScreen = () => {
 
     // window.addEventListener("beforeunload", handleBeforeUnload);
 
-    const timer = setTimeout(() => {
-      // window.close();
-      navigate("/");
-    }, 1000);
+    // const timer = setTimeout(() => {
+    //   // window.close();
+    //   navigate("/");
+    // }, 1000);
     return () => {
-      clearTimeout(timer);
-
+      // clearTimeout(timer);
       // window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [dispatch, navigate]);
