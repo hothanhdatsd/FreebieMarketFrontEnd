@@ -38,7 +38,7 @@ const App = () => {
 
   // Check if the current route should exclude the Header and Footer
   const shouldExcludeHeaderFooter =
-    location.pathname === "/successGG" ||
+    location.pathname === "/successgg" ||
     location.pathname === "/successFB" ||
     location.pathname === "/auth/fail" ||
     location.pathname === "/login" ||
