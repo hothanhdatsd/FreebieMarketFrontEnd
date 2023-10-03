@@ -73,7 +73,7 @@ const PlaceOrderScreen = ({ history }) => {
   };
   return (
     <>
-      <CheckoutSteps step1 step2 step3 step4 />
+      {/* <CheckoutSteps step1 step2 step3 step4 /> */}
       <Row style={{ width: "100%", padding: "0 20px" }}>
         <Col md={8}>
           <ListGroup variant="flush">

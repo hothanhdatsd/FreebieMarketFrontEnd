@@ -32,6 +32,8 @@ const OrderListScreen = ({ history }) => {
     <div
       style={{
         minHeight: "57%",
+        width: "100%",
+        padding: "0 0 0  20px",
       }}
     >
       <h1>Đơn đặt</h1>
@@ -49,7 +51,6 @@ const OrderListScreen = ({ history }) => {
               <th>Tổng</th>
               <th>Thông tin thanh toán</th>
               <th>Thông tin vận chuyển</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>

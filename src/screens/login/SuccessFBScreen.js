@@ -8,20 +8,20 @@ const SuccessFBScreen = () => {
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(loginFB());
-    // const handleBeforeUnload = () => {
-    //   window.opener.postMessage("reload", window.location.origin);
-    // };
+    const handleBeforeUnload = () => {
+      window.opener.postMessage("reload", window.location.origin);
+    };
 
-    // window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
     const timer = setTimeout(() => {
-      // window.close();
+      window.close();
       navigate("/");
     }, 1000);
     return () => {
       clearTimeout(timer);
 
-      // window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [dispatch, navigate]);
   return (

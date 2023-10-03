@@ -33,6 +33,7 @@ import Home from "./screens/AdminUi/Home";
 import VnpaymentScreen from "./screens/VnpaymentScreen";
 import CreateDiscountScreen from "./screens/discount/CreateDiscountScreen";
 import DiscountEditScreen from "./screens/discount/DiscountEditScreen";
+import ResetPassword from "./screens/login/ResetPassword";
 const App = () => {
   const location = useLocation();
 
@@ -42,7 +43,8 @@ const App = () => {
     location.pathname === "/successFB" ||
     location.pathname === "/auth/fail" ||
     location.pathname === "/login" ||
-    location.pathname === "/register";
+    location.pathname === "/register" ||
+    location.pathname === "/rspassword";
   // useEffect(() => {
   //   const handlePageHide = () => {
   //     // Your custom logic for when the user closes the browser/tab.
@@ -55,6 +57,20 @@ const App = () => {
   //     document.removeEventListener("visibilitychange", handlePageHide);
   //   };
   // }, []);
+  useEffect(() => {
+    const handleMessage = (event) => {
+      if (event.data === "reload") {
+        window.location.reload();
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
+  }, []);
   return (
     <div style={{ height: "100vh", width: "100%" }}>
       {!shouldExcludeHeaderFooter && <Header />}
@@ -65,6 +81,7 @@ const App = () => {
         <Route path="/payment" element={<PaymentScreen />} />
         <Route path="/placeorder" element={<PlaceOrderScreen />} />
         <Route path="/login" element={<LoginScreen />} />
+        <Route path="/rspassword" element={<ResetPassword />} />
         <Route path="/register" element={<RegisterScreen />} />
         <Route path="/profile" element={<ProfileScreen />} />
         <Route path="/product/:id" element={<ProductScreen />} />

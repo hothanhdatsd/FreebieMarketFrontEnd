@@ -43,8 +43,8 @@ const LoginScreen = ({ location }) => {
   }, [error]);
 
   const loginGoogle = async () => {
-    // const googleURL = "http://localhost:5000/auth/google";
-    const googleURL = "https://freebiemarketbe.onrender.com/auth/google";
+    const googleURL = "http://localhost:5000/auth/google";
+    // const googleURL = "https://freebiemarketbe.onrender.com/auth/google";
     const width = 500; // Desired width of the popup window
     const height = 600; // Desired height of the popup window
 
@@ -84,55 +84,6 @@ const LoginScreen = ({ location }) => {
   }, [dispatch, userInfo, redirect, navigate]);
 
   return (
-    // <FormContainer>
-    //   <h1 className="hehe">Đăng nhập</h1>
-    //   {error && <Message variant="danger">{error}</Message>}
-    //   {loading && <Loader />}
-    //   <Form onSubmit={submitHandler}>
-    //     <Form.Group controlId="userName">
-    //       <Form.Label>Tên tài khoản</Form.Label>
-    //       <Form.Control
-    //         type="text"
-    //         placeholder="Nhập userName"
-    //         value={userName}
-    //         onChange={(e) => setUserName(e.target.value)}
-    //       ></Form.Control>
-    //     </Form.Group>
-
-    //     <Form.Group controlId="password">
-    //       <Form.Label>Mật khẩu</Form.Label>
-    //       <Form.Control
-    //         type="password"
-    //         placeholder="Nhập password"
-    //         value={password}
-    //         onChange={(e) => setPassword(e.target.value)}
-    //       ></Form.Control>
-    //     </Form.Group>
-
-    //     <Button style={{ marginTop: 10 }} type="submit" variant="primary">
-    //       Đăng nhập
-    //     </Button>
-    //   </Form>
-    //   <Row className="py-3">
-    //     <Col>
-    //       <FacebookLoginButton onClick={loginFacebook} />
-    //     </Col>
-    //     <Col>
-    //       <GoogleLoginButton buttonText="Login" onClick={loginGoogle} />
-    //     </Col>
-    //   </Row>{" "}
-    //   <Row className="py-3">
-    //     <Col>
-    //       Chưa có tài khoản?{" "}
-    //       <Link
-    //         style={{ color: "#000" }}
-    //         to={redirect ? `/register?redirect=${redirect}` : "/register"}
-    //       >
-    //         Đăng ký
-    //       </Link>
-    //     </Col>
-    //   </Row>
-    // </FormContainer>
     <div className="container">
       <img className="food-img" src={bgimage} alt="" />
       <div className="container-item">
@@ -192,6 +143,9 @@ const LoginScreen = ({ location }) => {
           <NavLink className={"signup"} to={"/register"}>
             Sign up
           </NavLink>
+          <div className="register">
+            <NavLink to={"/rspassword"}>Forgot password</NavLink>
+          </div>
         </div>
       </div>
     </div>

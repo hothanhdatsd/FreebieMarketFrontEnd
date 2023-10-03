@@ -181,9 +181,9 @@ const ProductEditScreen = ({ match, location }) => {
               <Form.Select
                 aria-label="Default select example"
                 onChange={handleSelectChange}
-                value={category}
+                // value={category}
               >
-                <option selected>{category}</option>
+                {/* <option selected>{category}</option> */}
                 {typeProducts?.map((item) => (
                   <option
                     key={item?._id}
