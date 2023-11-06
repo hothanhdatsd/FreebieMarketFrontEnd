@@ -45,7 +45,7 @@ const PlaceOrderScreen = ({ history }) => {
 
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, success, error } = orderCreate;
-  let VND = new Intl.NumberFormat("en-US", {
+  let VND = new Intl.NumberFormat("vi-VN", {
     currency: "VND",
     style: "currency",
   });

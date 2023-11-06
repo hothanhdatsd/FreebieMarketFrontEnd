@@ -34,6 +34,7 @@ import VnpaymentScreen from "./screens/VnpaymentScreen";
 import CreateDiscountScreen from "./screens/discount/CreateDiscountScreen";
 import DiscountEditScreen from "./screens/discount/DiscountEditScreen";
 import ResetPassword from "./screens/login/ResetPassword";
+import EnterPassword from "./screens/login/EnterPassword";
 const App = () => {
   const location = useLocation();
 
@@ -82,6 +83,7 @@ const App = () => {
         <Route path="/placeorder" element={<PlaceOrderScreen />} />
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/rspassword" element={<ResetPassword />} />
+        <Route path="/enterpassword" element={<EnterPassword />} />
         <Route path="/register" element={<RegisterScreen />} />
         <Route path="/profile" element={<ProfileScreen />} />
         <Route path="/product/:id" element={<ProductScreen />} />

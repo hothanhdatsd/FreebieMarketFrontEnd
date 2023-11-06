@@ -62,7 +62,7 @@ const ProductScreen = ({ match }) => {
       })
     );
   };
-  let VND = new Intl.NumberFormat("en-US", {
+  let VND = new Intl.NumberFormat("vi-VN", {
     currency: "VND",
     style: "currency",
   });

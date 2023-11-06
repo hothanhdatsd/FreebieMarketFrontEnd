@@ -5,6 +5,7 @@ import { Table, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../../components/Message";
 import { listOrders } from "../../actions/orderActions";
+import moment from "moment";
 const OrderListScreen = ({ history }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const OrderListScreen = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  let VND = new Intl.NumberFormat("en-US", {
+  let VND = new Intl.NumberFormat("vi-VN", {
     currency: "VND",
     style: "currency",
   });
@@ -47,7 +48,7 @@ const OrderListScreen = ({ history }) => {
             <tr>
               <th>ID</th>
               <th>Người dùng</th>
-              <th>Ngày</th>
+              <th>Ngày đặt</th>
               <th>Tổng</th>
               <th>Thông tin thanh toán</th>
               <th>Thông tin vận chuyển</th>
@@ -58,8 +59,8 @@ const OrderListScreen = ({ history }) => {
               <tr key={order._id}>
                 <td>{order._id}</td>
                 <td>{order.user && order.user.name}</td>
-                <td>{order.createdAt.substring(0, 10)}</td>
-                <td>{VND.format(order.totalPrice)}đ</td>
+                <td>{moment(order.createdAt).format("DD/MM/YYYY")}</td>
+                <td>{VND.format(order.totalPrice)}</td>
                 <td>
                   {order.isPaid ? (
                     order.paidAt.substring(0, 10)

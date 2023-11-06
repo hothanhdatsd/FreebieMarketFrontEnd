@@ -53,7 +53,7 @@ const OrderScreen = ({ match }) => {
       0
     );
   }
-  let VND = new Intl.NumberFormat("en-US", {
+  let VND = new Intl.NumberFormat("vi-VN", {
     currency: "VND",
     style: "currency",
   });

@@ -11,6 +11,7 @@ import {
   deleteProduct,
   importProduct,
 } from "../../actions/productActions";
+import moment from "moment";
 import { PRODUCT_CREATE_RESET } from "../../constants/productConstant";
 
 const ProductListScreen = () => {
@@ -68,7 +69,7 @@ const ProductListScreen = () => {
       dispatch(deleteProduct(id));
     }
   };
-  let VND = new Intl.NumberFormat("VND", {
+  let VND = new Intl.NumberFormat("vi-VN", {
     currency: "VND",
     style: "currency",
   });
@@ -148,7 +149,8 @@ const ProductListScreen = () => {
                 <th>Tên</th>
                 <th>Loại</th>
                 <th>Giá</th>
-                <th>Loại</th>
+                <th>Ngày tạo</th>
+                <th>Ngày cập nhật</th>
               </tr>
             </thead>
             <tbody>
@@ -158,6 +160,8 @@ const ProductListScreen = () => {
                   <td>{product.name}</td>
                   <td>{product?.category?.name}</td>
                   <td>{VND.format(product.price)}</td>
+                  <td>{moment(product?.createdAt).format("DD/MM/YYYY")}</td>
+                  <td>{moment(product?.updatedAt).format("DD/MM/YYYY")}</td>
                   <td>
                     <LinkContainer to={`/admin/product/${product._id}/edit`}>
                       <Button variant="light" className="btn-sm">

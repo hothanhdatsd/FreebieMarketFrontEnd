@@ -7,6 +7,7 @@ import {
   listTypeProducts,
   deleteTypeProduct,
 } from "../../actions/typeProductActions.js";
+import moment from "moment";
 import Message from "../../components/Message.js";
 import Paginate from "../../components/Paginate.js";
 
@@ -85,6 +86,8 @@ const TypeProductListScreen = () => {
               <tr>
                 <th>ID</th>
                 <th>Tên</th>
+                <th>Ngày tạo</th>
+                <th>Ngày cập nhật</th>
               </tr>
             </thead>
             <tbody>
@@ -92,6 +95,8 @@ const TypeProductListScreen = () => {
                 <tr key={typeproduct._id}>
                   <td>{typeproduct._id}</td>
                   <td>{typeproduct.name}</td>
+                  <td>{moment(typeproduct?.createdAt).format("DD/MM/YYYY")}</td>
+                  <td>{moment(typeproduct?.updatedAt).format("DD/MM/YYYY")}</td>
                   <td>
                     <LinkContainer
                       to={`/admin/typeproductlist/${typeproduct._id}/edit`}

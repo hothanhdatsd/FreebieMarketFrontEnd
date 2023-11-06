@@ -101,7 +101,7 @@ const LoginScreen = ({ location }) => {
               <h5 className="contain-title">Email Address</h5>
               <input
                 className="input-email"
-                type="text"
+                type="email"
                 placeholder="Enter username"
                 value={email}
                 onChange={(e) => {

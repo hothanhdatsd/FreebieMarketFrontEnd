@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Message from "../../components/Message";
 import { listUsers, deleteUser } from "../../actions/userActions";
 import Paginate from "../../components/Paginate.js";
+import moment from "moment";
 
 const UserListScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -48,6 +49,8 @@ const UserListScreen = ({ history }) => {
               <th>Tên</th>
               <th>Email</th>
               <th>Quyền quản trị</th>
+              <th>Ngày tạo</th>
+              <th>Ngày cập nhật</th>
               <th>Thao tác</th>
             </tr>
           </thead>
@@ -66,6 +69,8 @@ const UserListScreen = ({ history }) => {
                     <i className="fas fa-times" style={{ color: "red" }}></i>
                   )}
                 </td>
+                <td>{moment(user?.createdAt).format("DD/MM/YYYY")}</td>
+                <td>{moment(user?.updatedAt).format("DD/MM/YYYY")}</td>
                 <td>
                   <LinkContainer to={`/admin/user/${user?._id}/edit`}>
                     <Button variant="light" className="btn-sm">

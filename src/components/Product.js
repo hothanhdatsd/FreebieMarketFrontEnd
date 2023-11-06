@@ -3,7 +3,7 @@ import { Card } from "react-bootstrap";
 import Rating from "../components/Rating";
 import { Link } from "react-router-dom";
 const Product = ({ product }) => {
-  let VND = new Intl.NumberFormat("en-US", {
+  let VND = new Intl.NumberFormat("vi-VN", {
     currency: "VND",
     style: "currency",
   });

@@ -33,7 +33,7 @@ const CartScreen = (match, location, history) => {
     }
   }, [dispatch, productId, qty]);
 
-  let VND = new Intl.NumberFormat("en-US", {
+  let VND = new Intl.NumberFormat("vi-VN", {
     currency: "VND",
     style: "currency",
   });
